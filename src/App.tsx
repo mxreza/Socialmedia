@@ -172,10 +172,10 @@ export default function App() {
       
       <main className="page relative z-10 max-w-[980px] mx-auto p-[50px_18px_80px]">
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-[240px_240px_195px_120px] gap-[10px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-[195px_195px_195px_110px] gap-[10px]">
           
           {/* Profile Card */}
-          <div className="card-glass lg:col-span-2 lg:row-span-2 p-0 flex flex-col justify-end min-h-[320px] rounded-[32px] lg:order-1">
+          <div className="card-glass lg:col-span-2 lg:row-span-2 p-0 flex flex-col justify-end min-h-[320px] lg:min-h-[400px] rounded-[32px] lg:order-1">
             <ProfilePattern />
             <div className="relative z-[3] p-[24px_26px_28px] flex flex-col items-center text-center lg:items-start lg:text-left">
               <div className="w-[140px] h-[140px] rounded-full p-[3px] bg-[linear-gradient(135deg,#0ecfb6,#ff5e1a)] mb-[20px] shrink-0 shadow-[0_0_0_6px_rgba(14,207,182,0.10),0_8px_28px_rgba(0,0,0,0.50)]">
@@ -193,13 +193,39 @@ export default function App() {
             </div>
           </div>
 
-          {/* About Card */}
           <div className="card-glass lg:col-span-2 lg:row-span-1 p-[28px_30px] flex flex-col justify-center items-center text-center lg:items-start lg:text-left rounded-[32px] lg:order-2">
             <div className="font-display text-[10px] font-bold tracking-[3px] uppercase text-orange opacity-90 mb-[12px]">About</div>
             <p className="text-[14px] font-light leading-[1.85] text-t2">
               <strong className="text-t1 font-semibold">Product designer</strong> focused on thoughtful and minimalist digital experiences, passionate about <strong className="text-t1 font-semibold">product management</strong> and building products, interface design, and creating functional and beautiful systems. Outside of design, I enjoy <strong className="text-t1 font-semibold">technology</strong>, EDM music, chess, and creative ideas.
             </p>
           </div>
+
+          {/* Dribbble Card */}
+          <a href="https://dribbble.com/mxreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-3">
+            <Arrow absolute />
+            <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
+               <img src="https://cdn.simpleicons.org/dribbble/EA4C89" alt="Dribbble" className="w-6 h-6 transition-all duration-300 transform group-hover:scale-110" />
+            </div>
+            <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
+              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Dribbble</div>
+              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxreza</div>
+              <div className="hidden lg:flex gap-[6px]">
+                <Chip value="1.4k" label="Followers" />
+                <Chip value="62" label="Shots" />
+              </div>
+            </div>
+            <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
+              <div className="flex flex-col items-end gap-[1px]">
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">1.4k</span>
+                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
+              </div>
+              <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
+              <div className="flex flex-col items-end gap-[1px]">
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">62</span>
+                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Shots</span>
+              </div>
+            </div>
+          </a>
 
           {/* LinkedIn Card */}
           <a href="https://linkedin.com/in/mxreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 sm:col-span-2 lg:col-span-2 relative lg:order-5">
@@ -226,56 +252,6 @@ export default function App() {
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
                 <span className="font-display font-bold text-[15px] text-t1 leading-none">47</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Posts</span>
-              </div>
-            </div>
-          </a>
-
-          {/* Instagram Card */}
-          <a href="https://instagram.com/Future.xperience" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row items-center gap-[14px] h-full sm:col-span-2 lg:col-span-2 rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative lg:order-8">
-            <Arrow absolute />
-            <div className="w-[48px] h-[48px] rounded-[13px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 overflow-hidden">
-               <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram" className="w-7 h-7 transition-all duration-300 transform group-hover:rotate-12 group-hover:scale-110" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="font-display font-bold text-[17px] text-t1 mb-[1px]">Instagram</div>
-              <div className="text-[10px] text-t3 lowercase">@Future.xperience</div>
-            </div>
-            <div className="flex items-center gap-[11px] shrink-0 pr-10">
-              <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">4.2k</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
-              </div>
-              <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
-              <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">118</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Posts</span>
-              </div>
-            </div>
-          </a>
-
-          {/* X Card */}
-          <a href="https://x.com/mxrezax" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-7">
-            <Arrow absolute />
-            <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <img src="https://cdn.simpleicons.org/x/ffffff" alt="X" className="w-4 h-4 transition-all duration-300 transform group-hover:scale-110" />
-            </div>
-            <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
-              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">X</div>
-              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxrezax</div>
-              <div className="hidden lg:flex gap-[6px]">
-                <Chip value="3.2k" label="Followers" />
-                <Chip value="680" label="Posts" />
-              </div>
-            </div>
-            <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
-              <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">3.2k</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
-              </div>
-              <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
-              <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">680</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Posts</span>
               </div>
             </div>
@@ -308,67 +284,44 @@ export default function App() {
             </div>
           </a>
 
-          {/* Dribbble Card */}
-          <a href="https://dribbble.com/mxreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-3">
+          {/* X Card */}
+          <a href="https://x.com/mxrezax" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-7">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <img src="https://cdn.simpleicons.org/dribbble/EA4C89" alt="Dribbble" className="w-6 h-6 transition-all duration-300 transform group-hover:scale-110" />
+               <img src="https://cdn.simpleicons.org/x/ffffff" alt="X" className="w-4 h-4 transition-all duration-300 transform group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
-              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Dribbble</div>
-              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxreza</div>
+              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">X</div>
+              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxrezax</div>
               <div className="hidden lg:flex gap-[6px]">
-                <Chip value="1.4k" label="Followers" />
-                <Chip value="62" label="Shots" />
+                <Chip value="3.2k" label="Followers" />
+                <Chip value="680" label="Posts" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">1.4k</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">3.2k</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">62</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Shots</span>
-              </div>
-            </div>
-          </a>
-
-          {/* Chess Card */}
-          <a href="https://link.chess.com/play/WmoVTI" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full sm:col-span-2 lg:col-span-1 rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-10">
-            <Arrow absolute />
-            <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <img src="https://cdn.simpleicons.org/chessdotcom/81B64C" alt="Chess.com" className="w-7 h-7 transition-all duration-300 transform group-hover:scale-110" />
-            </div>
-            <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
-              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Chess.com</div>
-              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px] truncate italic">Challenge me ♟</div>
-            </div>
-            <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
-              <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">1.4k</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Rating</span>
-              </div>
-              <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
-              <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">860</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Wins</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">680</span>
+                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Posts</span>
               </div>
             </div>
           </a>
 
           {/* CoffeeBede Card */}
-          <a href="https://www.coffeebede.com/mreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full sm:col-span-2 lg:col-span-1 rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-9">
-            <Arrow absolute />
-            <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <Coffee className="w-6 h-6 text-[#f5c842] transition-all duration-300 transform group-hover:rotate-12 group-hover:scale-110" />
+          <a href="https://www.coffeebede.com/mreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row items-center gap-[14px] h-full sm:col-span-2 lg:col-span-2 rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-8">
+            <Arrow absolute centered />
+            <div className="w-[48px] h-[48px] rounded-[13px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0">
+               <Coffee className="w-7 h-7 text-[#f5c842] transition-all duration-300 transform group-hover:rotate-12 group-hover:scale-110" />
             </div>
-            <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
-              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">CoffeeBede</div>
-              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px] font-medium">Support me</div>
+            <div className="flex-1 min-w-0">
+              <div className="font-display font-bold text-[17px] text-t1 mb-[1px]">CoffeeBede</div>
+              <div className="text-[10px] text-t3 font-medium">Support me</div>
             </div>
-            <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
+            <div className="flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
                 <span className="font-display font-bold text-[15px] text-t1 leading-none">12</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Fans</span>
@@ -381,29 +334,52 @@ export default function App() {
             </div>
           </a>
 
-          {/* Figma Card */}
-          <a href="https://figma.com/@mxreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-4">
+          {/* Chess Card */}
+          <a href="https://link.chess.com/play/WmoVTI" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row items-center gap-[14px] h-full sm:col-span-2 lg:col-span-2 rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-9">
+            <Arrow absolute centered />
+            <div className="w-[48px] h-[48px] rounded-[13px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0">
+               <img src="https://cdn.simpleicons.org/chessdotcom/81B64C" alt="Chess.com" className="w-8 h-8 transition-all duration-300 transform group-hover:scale-110" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="font-display font-bold text-[17px] text-t1 mb-[1px]">Chess.com</div>
+              <div className="text-[10px] text-t3 italic">Challenge me ♟</div>
+            </div>
+            <div className="flex items-center gap-[11px] shrink-0 pr-10">
+              <div className="flex flex-col items-end gap-[1px]">
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">1.4k</span>
+                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Rating</span>
+              </div>
+              <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
+              <div className="flex flex-col items-end gap-[1px]">
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">860</span>
+                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Wins</span>
+              </div>
+            </div>
+          </a>
+
+          {/* Instagram Card (Last in DOM, Order 4 for desktop) */}
+          <a href="https://instagram.com/Future.xperience" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-4">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <img src="https://cdn.simpleicons.org/figma" alt="Figma" className="w-6 h-6 transition-all duration-300 transform group-hover:scale-110" />
+               <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram" className="w-6 h-6 transition-all duration-300 transform group-hover:rotate-12 group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
-              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Figma</div>
-              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxreza</div>
+              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Instagram</div>
+              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@Future.xperience</div>
               <div className="hidden lg:flex gap-[6px]">
-                <Chip value="31" label="Projects" />
-                <Chip value="2.1k" label="Followers" />
+                <Chip value="4.2k" label="Followers" />
+                <Chip value="118" label="Posts" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">2.1k</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">4.2k</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">31</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Projects</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">118</span>
+                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Posts</span>
               </div>
             </div>
           </a>
