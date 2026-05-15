@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring, useScroll, useTransform } from "motion/react";
+import { motion, useMotionValue, useSpring } from "motion/react";
 
 import { Coffee, Rocket, Cpu, Zap, Brain, Palette, Atom, Sparkles, Monitor, Orbit } from "lucide-react";
 
@@ -231,27 +231,20 @@ const ProfilePattern = () => (
 );
 
 export default function App() {
-  const { scrollY } = useScroll();
-  const scrollSpring = useSpring(scrollY, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  
-  // Create a subtle "Rubber Band" parallax effect on the main content
-  const y = useTransform(scrollSpring, (value) => -value * 0.05);
-
   return (
     <div className="min-h-screen relative overflow-x-hidden">
       <CustomCursor />
       <Background />
       
       <motion.main 
-        style={{ y }}
-        initial={{ opacity: 0, y: 30, scale: 0.98 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ 
+        initial={!isMobile ? { opacity: 0, y: 30, scale: 0.98 } : { opacity: 1 }}
+        animate={!isMobile ? { opacity: 1, y: 0, scale: 1 } : { opacity: 1 }}
+        transition={!isMobile ? { 
           type: "spring", 
           stiffness: 120, 
           damping: 14,
           mass: 1.1
-        }}
+        } : { duration: 0 }}
         className="page relative z-10 max-w-[980px] mx-auto p-[50px_18px_80px]"
       >
         {/* Bento Grid */}
@@ -260,7 +253,7 @@ export default function App() {
           {/* Profile Card */}
           <motion.div 
             whileHover={!isMobile ? { scale: 1.012, y: -4, rotate: 0.5 } : {}}
-            whileTap={{ scale: 0.96 }}
+            whileTap={!isMobile ? { scale: 0.96 } : {}}
             transition={{ type: "spring", stiffness: 450, damping: 12 }}
             className="card-glass lg:col-span-2 lg:row-span-2 p-0 flex flex-col justify-end min-h-[320px] lg:min-h-[400px] rounded-[32px] lg:order-1 relative overflow-hidden"
           >
@@ -294,7 +287,7 @@ export default function App() {
 
           <motion.div 
             whileHover={!isMobile ? { scale: 1.012, y: -4, rotate: -0.5 } : {}}
-            whileTap={{ scale: 0.96 }}
+            whileTap={!isMobile ? { scale: 0.96 } : {}}
             transition={{ type: "spring", stiffness: 450, damping: 12 }}
             className="card-glass lg:col-span-2 lg:row-span-1 p-[28px_30px] flex flex-col justify-center items-start text-left rounded-[32px] lg:order-2"
           >

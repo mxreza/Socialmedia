@@ -24,7 +24,6 @@
 body {
   @apply bg-bg text-t1 selection:bg-teal/30 overflow-x-hidden;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  overscroll-behavior-y: contain; /* Enable modern overscroll rubber band effects */
 }
 
 @media (min-width: 769px) {
