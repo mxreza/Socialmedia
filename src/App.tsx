@@ -186,8 +186,8 @@ export default function App() {
                     alt="Mohammadreza Aghamohammadi" 
                     onError={(e) => { 
                       const target = e.target as HTMLImageElement;
-                      if (!target.src.includes('dicebear')) {
-                        target.src = "https://api.dicebear.com/7.x/notionists/svg?seed=Mohammadreza&backgroundColor=0a1414&hairColor=221916";
+                      if (!target.src.includes('images.unsplash.com')) {
+                        target.src = "https://media.licdn.com/dms/image/v2/D4E03AQHxxJKEuTTosQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1710083399268?e=1780531200&v=beta&t=sYRv8oA4Ch3_LFx9XPLXF-_NHw4Wiv6ENb6a6UjV9Zo";
                       }
                     }} 
                     className="w-full h-full object-cover" 
@@ -204,10 +204,10 @@ export default function App() {
             </div>
           </div>
 
-          <div className="card-glass lg:col-span-2 lg:row-span-1 p-[28px_30px] flex flex-col justify-center items-center text-center lg:items-start lg:text-left rounded-[32px] lg:order-2">
+          <div className="card-glass lg:col-span-2 lg:row-span-1 p-[28px_30px] flex flex-col justify-center items-start text-left rounded-[32px] lg:order-2">
             <div className="font-display text-[10px] font-bold tracking-[3px] uppercase text-orange opacity-90 mb-[12px]">About</div>
             <p className="text-[14px] font-light leading-[1.85] text-t2">
-              <strong className="text-t1 font-semibold">Product designer</strong> focused on thoughtful and minimalist digital experiences, passionate about <strong className="text-t1 font-semibold">product management</strong> and building products, interface design, and creating functional and beautiful systems. Outside of design, I enjoy <strong className="text-t1 font-semibold">technology</strong>, EDM music, chess, and creative ideas.
+              <strong className="text-t1 font-semibold">Product designer</strong> focused on creating <strong className="text-t1 font-semibold">user-centered, minimalist, and data-driven</strong> digital experiences. Passionate about <strong className="text-t1 font-semibold">product management</strong> and building products, solving complex problems, <strong className="text-t1 font-semibold">technology</strong>, <strong className="text-t1 font-semibold">systems thinking</strong>, and crafting <strong className="text-t1 font-semibold">functional and beautiful</strong> digital experiences.
             </p>
           </div>
 
