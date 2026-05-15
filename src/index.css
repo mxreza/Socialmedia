@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700;800&family=Mulish:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Mulish', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Oxanium', sans-serif;
+  
+  --color-bg: #050e0c;
+  --color-teal: #0ecfb6;
+  --color-teal-lo: #0a9485;
+  --color-orange: #ff5e1a;
+  --color-orange-hi: #ff7c42;
+  --color-glass: rgba(10, 32, 28, 0.52);
+  --color-glass-b: rgba(14, 207, 182, 0.13);
+  --color-t1: rgba(218, 255, 250, 0.93);
+  --color-t2: rgba(175, 230, 222, 0.50);
+  --color-t3: rgba(130, 200, 190, 0.28);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-bg text-t1 selection:bg-teal/30 overflow-x-hidden;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Glass Card Utility */
+.card-glass {
+  @apply relative overflow-hidden bg-glass backdrop-blur-[30px] border border-glass-b transition-all duration-300;
+  box-shadow: 
+    inset 0 1.5px 0 rgba(14, 207, 182, 0.10),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+    0 4px 36px rgba(0, 0, 0, 0.50),
+    0 1px 8px rgba(0, 0, 0, 0.30);
+}
+
+.card-glass::before {
+  content: '';
+  @apply absolute top-0 left-[12%] right-[12%] h-[1px] z-[3] pointer-events-none;
+  background: linear-gradient(90deg, transparent, rgba(14, 207, 182, 0.50), transparent);
+}
+
+.card-glass::after {
+  content: '';
+  @apply absolute inset-0 z-[1] pointer-events-none;
+  border-radius: inherit;
+  background: linear-gradient(150deg, rgba(14, 207, 182, 0.06) 0%, rgba(255, 90, 26, 0.04) 50%, transparent 70%);
+}
+
+.card-glass-hover:hover {
+  @apply -translate-y-1.5 scale-[1.013] border-[#ff5e1a]/35;
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 90, 26, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.40),
+    0 20px 64px rgba(0, 0, 0, 0.60),
+    0 4px 20px rgba(220, 70, 10, 0.20);
+}
+
+/* Animated Background Blobs */
+.blob {
+  @apply absolute rounded-full blur-[88px] pointer-events-none mix-blend-screen;
+  will-change: transform;
+}
+
+@keyframes d-float {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(52px, 38px) scale(1.08); }
+  66% { transform: translate(22px, 75px) scale(0.95); }
+  100% { transform: translate(68px, 18px) scale(1.05); }
+}
+
+@keyframes d-float-reverse {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(38px, -32px) scale(1.14); }
+  100% { transform: translate(-18px, 36px) scale(0.88); }
+}
+
+.animate-blob {
+  animation: d-float 7s ease-in-out infinite alternate;
+}
+
+.animate-blob-slow {
+  animation: d-float 10s ease-in-out infinite alternate;
+}
+
+.animate-blob-reverse {
+  animation: d-float-reverse 5s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes heartbeat {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 216, 122, 0.5); }
+  50% { box-shadow: 0 0 0 5px rgba(34, 216, 122, 0); }
+}
+
+/* Noise texture */
+.noise {
+  @apply fixed inset-0 opacity-[0.025] pointer-events-none z-0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px;
+}
