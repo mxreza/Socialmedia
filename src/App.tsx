@@ -1,21 +1,22 @@
 import React from "react";
 import { motion } from "motion/react";
 
-import { Coffee, Rocket, Cpu, Zap, Brain, Palette, Atom, Sparkles } from "lucide-react";
+import { Coffee, Rocket, Cpu, Zap, Brain, Palette, Atom, Sparkles, Monitor, Orbit } from "lucide-react";
 
 // --- Components ---
 
 const Background = () => (
-  <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-    <div className="absolute inset-0 bg-[radial-gradient(ellipse_90%_65%_at_50%_50%,rgba(5,35,30,0.6)_0%,transparent_70%)]" />
+  <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-[#050e0c]">
+    <div className="dot-grid" />
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_70%_at_50%_50%,rgba(5,35,30,0.65)_0%,transparent_75%)]" />
     {/* Teal blobs */}
-    <div className="blob animate-blob w-[640px] h-[540px] opacity-[0.58] -top-[14%] -left-[10%] bg-[radial-gradient(circle,rgba(10,148,133,0.52)_0%,transparent_70%)]" />
-    <div className="blob animate-blob-slow w-[500px] h-[440px] opacity-[0.44] bottom-[8%] -right-[8%] bg-[radial-gradient(circle,rgba(6,96,84,0.42)_0%,transparent_70%)]" />
-    <div className="blob animate-blob w-[300px] h-[280px] opacity-[0.32] top-[42%] left-[35%] bg-[radial-gradient(circle,rgba(14,207,182,0.26)_0%,transparent_70%)]" />
+    <div className="blob animate-blob w-[850px] h-[720px] opacity-[0.45] -top-[18%] -left-[15%] bg-[radial-gradient(circle,rgba(10,148,133,0.48)_0%,transparent_70%)]" />
+    <div className="blob animate-blob-slow w-[680px] h-[600px] opacity-[0.35] bottom-[2%] -right-[10%] bg-[radial-gradient(circle,rgba(6,96,84,0.38)_0%,transparent_70%)]" />
+    <div className="blob animate-blob w-[450px] h-[420px] opacity-[0.25] top-[38%] left-[32%] bg-[radial-gradient(circle,rgba(14,207,182,0.22)_0%,transparent_70%)]" />
     {/* Orange blobs */}
-    <div className="blob animate-blob w-[540px] h-[480px] opacity-[0.78] top-[2%] right-[2%] bg-[radial-gradient(circle,rgba(220,72,10,0.52)_0%,transparent_70%)]" />
-    <div className="blob animate-blob-slow w-[400px] h-[360px] opacity-[0.68] bottom-[18%] left-[18%] bg-[radial-gradient(circle,rgba(255,80,20,0.38)_0%,transparent_70%)]" />
-    <div className="blob animate-blob-reverse w-[300px] h-[260px] opacity-[0.58] top-[55%] right-[28%] bg-[radial-gradient(circle,rgba(255,100,30,0.28)_0%,transparent_70%)]" />
+    <div className="blob animate-blob w-[780px] h-[680px] opacity-[0.62] -top-[5%] right-[0%] bg-[radial-gradient(circle,rgba(220,72,10,0.48)_0%,transparent_70%)]" />
+    <div className="blob animate-blob-slow w-[580px] h-[520px] opacity-[0.52] bottom-[14%] left-[14%] bg-[radial-gradient(circle,rgba(255,80,20,0.34)_0%,transparent_70%)]" />
+    <div className="blob animate-blob-reverse w-[450px] h-[380px] opacity-[0.44] top-[52%] right-[25%] bg-[radial-gradient(circle,rgba(255,100,30,0.24)_0%,transparent_70%)]" />
     <div className="noise" />
   </div>
 );
@@ -55,90 +56,84 @@ const ProfilePattern = () => (
         <circle cx="200" cy="50" r="0.5" fill="#fff" />
       </g>
       
-      {/* Lucide Icons in Pattern */}
-      <foreignObject x="320" y="55" width="30" height="30">
-        <Brain className="w-full h-full text-teal opacity-60" strokeWidth={1.5} />
+      {/* Lucide Icons in Pattern - Area 1 (Top Left) */}
+      <foreignObject x="40" y="30" width="22" height="22" transform="rotate(-15)">
+        <Monitor className="w-full h-full text-teal opacity-40" strokeWidth={1.5} />
+      </foreignObject>
+      <foreignObject x="85" y="65" width="28" height="28" transform="rotate(10)">
+        <Rocket className="w-full h-full text-orange opacity-45" strokeWidth={1.2} />
+      </foreignObject>
+      <foreignObject x="20" y="110" width="20" height="20">
+        <Zap className="w-full h-full text-teal opacity-30" strokeWidth={1.5} />
       </foreignObject>
 
-      <foreignObject x="350" y="35" width="20" height="20">
-        <Sparkles className="w-full h-full text-orange opacity-50" strokeWidth={1.5} />
+      {/* Area 2 (Top Right) */}
+      <foreignObject x="380" y="25" width="24" height="24" transform="rotate(15)">
+        <Orbit className="w-full h-full text-teal opacity-50" strokeWidth={1.2} />
+      </foreignObject>
+      <foreignObject x="440" y="60" width="20" height="20">
+        <Palette className="w-full h-full text-orange opacity-35" strokeWidth={1.5} />
+      </foreignObject>
+      <foreignObject x="330" y="70" width="26" height="26">
+        <Monitor className="w-full h-full text-teal opacity-25" strokeWidth={1.5} />
       </foreignObject>
 
-      <foreignObject x="170" y="300" width="30" height="30">
-        <Atom className="w-full h-full text-teal opacity-40" strokeWidth={1.5} />
+      {/* Area 3 (Center Cluster) */}
+      <foreignObject x="180" y="45" width="18" height="18">
+        <Zap className="w-full h-full text-orange opacity-40" strokeWidth={1.5} />
+      </foreignObject>
+      <foreignObject x="290" y="140" width="22" height="22" transform="rotate(-20)">
+        <Rocket className="w-full h-full text-teal opacity-35" strokeWidth={1.2} />
+      </foreignObject>
+      <foreignObject x="210" y="320" width="25" height="25">
+        <Orbit className="w-full h-full text-orange opacity-30" strokeWidth={1.2} />
       </foreignObject>
 
-      <foreignObject x="45" y="145" width="24" height="24" transform="rotate(15)">
-        <Palette className="w-full h-full text-teal opacity-50" strokeWidth={1.5} />
+      {/* Area 4 (Bottom Left) */}
+      <foreignObject x="50" y="280" width="24" height="24" transform="rotate(12)">
+        <Palette className="w-full h-full text-teal opacity-45" strokeWidth={1.5} />
+      </foreignObject>
+      <foreignObject x="110" y="320" width="20" height="20">
+        <Monitor className="w-full h-full text-orange opacity-30" strokeWidth={1.5} />
+      </foreignObject>
+      <foreignObject x="30" y="340" width="22" height="22">
+        <Zap className="w-full h-full text-teal opacity-25" strokeWidth={1.5} />
       </foreignObject>
 
-      <foreignObject x="135" y="255" width="24" height="24">
-        <Zap className="w-full h-full text-orange opacity-50" strokeWidth={1.5} />
+      {/* Area 5 (Bottom Right) */}
+      <foreignObject x="420" y="280" width="28" height="28" transform="rotate(-10)">
+        <Rocket className="w-full h-full text-orange opacity-50" strokeWidth={1.2} />
+      </foreignObject>
+      <foreignObject x="360" y="330" width="22" height="22">
+        <Monitor className="w-full h-full text-teal opacity-35" strokeWidth={1.5} />
+      </foreignObject>
+      <foreignObject x="450" y="350" width="20" height="20">
+        <Orbit className="w-full h-full text-orange opacity-25" strokeWidth={1.2} />
       </foreignObject>
 
-      <foreignObject x="75" y="55" width="35" height="35" transform="rotate(-15)">
-        <Cpu className="w-full h-full text-teal opacity-40" strokeWidth={1} />
-      </foreignObject>
-      
-      <foreignObject x="415" y="75" width="28" height="28" transform="rotate(-30)">
-        <Rocket className="w-full h-full text-teal opacity-60" strokeWidth={1.5} />
-      </foreignObject>
-
-      <foreignObject x="35" y="295" width="25" height="25" transform="rotate(20)">
-        <Sparkles className="w-full h-full text-teal opacity-30" strokeWidth={1} />
-      </foreignObject>
-
-      <foreignObject x="375" y="315" width="28" height="28">
+      {/* Area 6 (Mid Sides) */}
+      <foreignObject x="460" y="180" width="18" height="18">
         <Zap className="w-full h-full text-teal opacity-40" strokeWidth={1.5} />
       </foreignObject>
-
-      {/* New Additional Icons */}
-      <foreignObject x="440" y="40" width="18" height="18">
-        <Cpu className="w-full h-full text-orange opacity-30" strokeWidth={1.5} />
+      <foreignObject x="15" y="210" width="20" height="20" transform="rotate(25)">
+        <Palette className="w-full h-full text-orange opacity-30" strokeWidth={1.5} />
+      </foreignObject>
+      <foreignObject x="130" y="240" width="24" height="24">
+        <Monitor className="w-full h-full text-teal opacity-20" strokeWidth={1.5} />
+      </foreignObject>
+      <foreignObject x="390" y="160" width="22" height="22">
+        <Orbit className="w-full h-full text-orange opacity-35" strokeWidth={1.2} />
       </foreignObject>
 
-      <foreignObject x="20" y="60" width="22" height="22">
-        <Rocket className="w-full h-full text-teal opacity-25" strokeWidth={1.2} />
+      {/* Existing Abstract Icons (Brain, Atom, etc.) distributed */}
+      <foreignObject x="250" y="80" width="18" height="18">
+        <Brain className="w-full h-full text-teal opacity-40" strokeWidth={1.5} />
       </foreignObject>
-
-      <foreignObject x="460" y="150" width="20" height="20">
-        <Brain className="w-full h-full text-orange opacity-35" strokeWidth={1.5} />
+      <foreignObject x="140" y="100" width="22" height="22">
+        <Atom className="w-full h-full text-orange opacity-25" strokeWidth={1.5} />
       </foreignObject>
-
-      <foreignObject x="280" y="280" width="25" height="25" transform="rotate(10)">
-        <Palette className="w-full h-full text-teal opacity-30" strokeWidth={1.5} />
-      </foreignObject>
-
-      <foreignObject x="100" y="350" width="20" height="20">
-        <Atom className="w-full h-full text-orange opacity-30" strokeWidth={1.5} />
-      </foreignObject>
-
-      <foreignObject x="220" y="20" width="18" height="18">
-        <Sparkles className="w-full h-full text-teal opacity-40" strokeWidth={1.5} />
-      </foreignObject>
-
-      <foreignObject x="400" y="220" width="22" height="22" transform="rotate(-15)">
-        <Zap className="w-full h-full text-teal opacity-25" strokeWidth={1.2} />
-      </foreignObject>
-
-      <foreignObject x="50" y="220" width="20" height="20">
-        <Cpu className="w-full h-full text-orange opacity-35" strokeWidth={1.5} />
-      </foreignObject>
-
-      <foreignObject x="120" y="20" width="24" height="24" transform="rotate(5)">
-        <Palette className="w-full h-full text-orange opacity-25" strokeWidth={1.2} />
-      </foreignObject>
-
-      <foreignObject x="300" y="340" width="24" height="24">
-        <Rocket className="w-full h-full text-orange opacity-30" strokeWidth={1.5} />
-      </foreignObject>
-
-      <foreignObject x="450" y="340" width="18" height="18">
-        <Brain className="w-full h-full text-teal opacity-30" strokeWidth={1.2} />
-      </foreignObject>
-
-      <foreignObject x="10" y="360" width="22" height="22">
-        <Zap className="w-full h-full text-orange opacity-25" strokeWidth={1.5} />
+      <foreignObject x="320" y="240" width="20" height="20">
+        <Cpu className="w-full h-full text-teal opacity-30" strokeWidth={1} />
       </foreignObject>
 
       {/* Grid Lines */}

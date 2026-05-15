@@ -60,33 +60,33 @@ body {
 
 /* Animated Background Blobs */
 .blob {
-  @apply absolute rounded-full blur-[88px] pointer-events-none mix-blend-screen;
+  @apply absolute rounded-full blur-[140px] pointer-events-none mix-blend-screen;
   will-change: transform;
 }
 
 @keyframes d-float {
   0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(52px, 38px) scale(1.08); }
-  66% { transform: translate(22px, 75px) scale(0.95); }
-  100% { transform: translate(68px, 18px) scale(1.05); }
+  33% { transform: translate(60px, 45px) scale(1.1); }
+  66% { transform: translate(25px, 90px) scale(0.92); }
+  100% { transform: translate(75px, 20px) scale(1.08); }
 }
 
 @keyframes d-float-reverse {
   0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(38px, -32px) scale(1.14); }
-  100% { transform: translate(-18px, 36px) scale(0.88); }
+  50% { transform: translate(45px, -40px) scale(1.18); }
+  100% { transform: translate(-22px, 42px) scale(0.85); }
 }
 
 .animate-blob {
-  animation: d-float 7s ease-in-out infinite alternate;
+  animation: d-float 4.5s ease-in-out infinite alternate;
 }
 
 .animate-blob-slow {
-  animation: d-float 10s ease-in-out infinite alternate;
+  animation: d-float 6.5s ease-in-out infinite alternate;
 }
 
 .animate-blob-reverse {
-  animation: d-float-reverse 5s ease-in-out infinite alternate-reverse;
+  animation: d-float-reverse 3.5s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes heartbeat {
@@ -94,9 +94,14 @@ body {
   50% { box-shadow: 0 0 0 5px rgba(34, 216, 122, 0); }
 }
 
-/* Noise texture */
+/* Noise & Grid textures */
 .noise {
-  @apply fixed inset-0 opacity-[0.025] pointer-events-none z-0;
+  @apply fixed inset-0 opacity-[0.025] pointer-events-none z-[1];
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px;
+}
+
+.dot-grid {
+  @apply fixed inset-0 opacity-[0.22] pointer-events-none z-0;
+  background-image: url("data:image/svg+xml,%3Csvg width='36' height='36' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='1.5' height='1.5' fill='white'/%3E%3C/svg%3E");
 }
