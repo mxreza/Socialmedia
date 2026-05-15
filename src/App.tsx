@@ -1,9 +1,65 @@
-import React from "react";
-import { motion } from "motion/react";
+import React, { useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring, useScroll, useTransform } from "motion/react";
 
 import { Coffee, Rocket, Cpu, Zap, Brain, Palette, Atom, Sparkles, Monitor, Orbit } from "lucide-react";
 
 const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+const CustomCursor = () => {
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  
+  const springConfig = { damping: 25, stiffness: 250, mass: 0.5 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
+  const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+      
+      const target = e.target as HTMLElement;
+      setIsHovering(!!target.closest('a, button, .card-glass-hover'));
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+    return () => {
+      window.removeEventListener("mousemove", moveCursor);
+    };
+  }, []);
+
+  if (isMobile) return null;
+
+  return (
+    <>
+      <motion.div
+        className="fixed top-0 left-0 w-10 h-10 border border-teal/50 rounded-full pointer-events-none z-[9999] mix-blend-screen -ml-5 -mt-5"
+        style={{
+          x: cursorXSpring,
+          y: cursorYSpring,
+        }}
+        animate={{
+          scale: isHovering ? 1.5 : 1,
+          borderColor: isHovering ? "rgba(255, 94, 26, 0.6)" : "rgba(14, 207, 182, 0.5)",
+          backgroundColor: isHovering ? "rgba(255, 94, 26, 0.05)" : "rgba(14, 207, 182, 0)"
+        }}
+      />
+      <motion.div
+        className="fixed top-0 left-0 w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-[10000] -ml-0.75 -mt-0.75"
+        style={{
+          x: cursorX,
+          y: cursorY,
+        }}
+        animate={{
+          scale: isHovering ? 0.5 : 1,
+          backgroundColor: isHovering ? "#ff5e1a" : "#ffffff"
+        }}
+      />
+    </>
+  );
+};
 
 // --- Components ---
 
@@ -175,16 +231,39 @@ const ProfilePattern = () => (
 );
 
 export default function App() {
+  const { scrollY } = useScroll();
+  const scrollSpring = useSpring(scrollY, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  
+  // Create a subtle "Rubber Band" parallax effect on the main content
+  const y = useTransform(scrollSpring, (value) => -value * 0.05);
+
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative overflow-x-hidden">
+      <CustomCursor />
       <Background />
       
-      <main className="page relative z-10 max-w-[980px] mx-auto p-[50px_18px_80px]">
+      <motion.main 
+        style={{ y }}
+        initial={{ opacity: 0, y: 30, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ 
+          type: "spring", 
+          stiffness: 120, 
+          damping: 14,
+          mass: 1.1
+        }}
+        className="page relative z-10 max-w-[980px] mx-auto p-[50px_18px_80px]"
+      >
         {/* Bento Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-[195px_195px_195px_110px] gap-[10px]">
           
           {/* Profile Card */}
-          <div className="card-glass lg:col-span-2 lg:row-span-2 p-0 flex flex-col justify-end min-h-[320px] lg:min-h-[400px] rounded-[32px] lg:order-1 relative overflow-hidden">
+          <motion.div 
+            whileHover={!isMobile ? { scale: 1.012, y: -4, rotate: 0.5 } : {}}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 450, damping: 12 }}
+            className="card-glass lg:col-span-2 lg:row-span-2 p-0 flex flex-col justify-end min-h-[320px] lg:min-h-[400px] rounded-[32px] lg:order-1 relative overflow-hidden"
+          >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,100,26,0.06),transparent_60%)] pointer-events-none" />
             {!isMobile && <ProfilePattern />}
             <div className="relative z-[3] p-[24px_26px_28px] flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -211,14 +290,19 @@ export default function App() {
                 Product Designer
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="card-glass lg:col-span-2 lg:row-span-1 p-[28px_30px] flex flex-col justify-center items-start text-left rounded-[32px] lg:order-2">
+          <motion.div 
+            whileHover={!isMobile ? { scale: 1.012, y: -4, rotate: -0.5 } : {}}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 450, damping: 12 }}
+            className="card-glass lg:col-span-2 lg:row-span-1 p-[28px_30px] flex flex-col justify-center items-start text-left rounded-[32px] lg:order-2"
+          >
             <div className="font-display text-[10px] font-bold tracking-[3px] uppercase text-orange opacity-90 mb-[12px]">About</div>
             <p className="text-[14px] font-light leading-[1.85] text-t2">
               <strong className="text-t1 font-semibold">Product designer</strong> focused on creating <strong className="text-t1 font-semibold">user-centered</strong>, minimalist, and <strong className="text-t1 font-semibold">data-driven</strong> digital experiences. Passionate about <strong className="text-t1 font-semibold">product management</strong> and building products, solving complex problems, technology, <strong className="text-t1 font-semibold">systems thinking</strong>, and crafting <strong className="text-t1 font-semibold">functional and beautiful</strong> digital experiences.
             </p>
-          </div>
+          </motion.div>
 
           {/* Instagram Card (Now 3rd in DOM for mobile, Order 4 for desktop) */}
           <a href="https://instagram.com/Future.xperience" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-4">
@@ -403,9 +487,8 @@ export default function App() {
               </div>
             </div>
           </a>
-
         </div>
-      </main>
+      </motion.main>
     </div>
   );
 }
