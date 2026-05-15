@@ -175,12 +175,23 @@ export default function App() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-[195px_195px_195px_110px] gap-[10px]">
           
           {/* Profile Card */}
-          <div className="card-glass lg:col-span-2 lg:row-span-2 p-0 flex flex-col justify-end min-h-[320px] lg:min-h-[400px] rounded-[32px] lg:order-1">
+          <div className="card-glass lg:col-span-2 lg:row-span-2 p-0 flex flex-col justify-end min-h-[320px] lg:min-h-[400px] rounded-[32px] lg:order-1 relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,100,26,0.06),transparent_60%)] pointer-events-none" />
             <ProfilePattern />
             <div className="relative z-[3] p-[24px_26px_28px] flex flex-col items-center text-center lg:items-start lg:text-left">
               <div className="w-[140px] h-[140px] rounded-full p-[3px] bg-[linear-gradient(135deg,#0ecfb6,#ff5e1a)] mb-[20px] shrink-0 shadow-[0_0_0_6px_rgba(14,207,182,0.10),0_8px_28px_rgba(0,0,0,0.50)]">
                 <div className="w-full h-full rounded-full bg-[linear-gradient(145deg,#0d3530,#08201c)] flex items-center justify-center overflow-hidden font-display font-bold text-[20px] text-teal tracking-[0.5px]">
-                  <img src="/profile.jpg" alt="Mohammadreza" onError={(e) => { (e.target as HTMLImageElement).src = "https://api.dicebear.com/7.x/notionists/svg?seed=MReza&backgroundColor=0a1414&hairColor=221916" }} className="w-full h-full object-cover scale-105" />
+                  <img 
+                    src="/profile.jpg" 
+                    alt="Mohammadreza Aghamohammadi" 
+                    onError={(e) => { 
+                      const target = e.target as HTMLImageElement;
+                      if (!target.src.includes('dicebear')) {
+                        target.src = "https://api.dicebear.com/7.x/notionists/svg?seed=Mohammadreza&backgroundColor=0a1414&hairColor=221916";
+                      }
+                    }} 
+                    className="w-full h-full object-cover" 
+                  />
                 </div>
               </div>
               <h1 className="font-display font-medium text-[clamp(24px,3vw,36px)] leading-[1.1] text-t1 mb-[12px]">
@@ -200,29 +211,29 @@ export default function App() {
             </p>
           </div>
 
-          {/* Dribbble Card */}
-          <a href="https://dribbble.com/mxreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-3">
+          {/* Instagram Card (Now 3rd in DOM for mobile, Order 4 for desktop) */}
+          <a href="https://instagram.com/Future.xperience" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-4">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <img src="https://cdn.simpleicons.org/dribbble/EA4C89" alt="Dribbble" className="w-6 h-6 transition-all duration-300 transform group-hover:scale-110" />
+               <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram" className="w-6 h-6 transition-all duration-300 transform group-hover:rotate-12 group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
-              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Dribbble</div>
-              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxreza</div>
+              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Instagram</div>
+              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@Future.xperience</div>
               <div className="hidden lg:flex gap-[6px]">
-                <Chip value="1.4k" label="Followers" />
-                <Chip value="62" label="Shots" />
+                <Chip value="4.2k" label="Followers" />
+                <Chip value="118" label="Posts" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">1.4k</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">4.2k</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">62</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Shots</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">118</span>
+                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Posts</span>
               </div>
             </div>
           </a>
@@ -357,29 +368,29 @@ export default function App() {
             </div>
           </a>
 
-          {/* Instagram Card (Last in DOM, Order 4 for desktop) */}
-          <a href="https://instagram.com/Future.xperience" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-4">
+          {/* Dribbble Card (Now last in DOM for mobile, Order 3 for desktop) */}
+          <a href="https://dribbble.com/mxreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-3">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram" className="w-6 h-6 transition-all duration-300 transform group-hover:rotate-12 group-hover:scale-110" />
+               <img src="https://cdn.simpleicons.org/dribbble/EA4C89" alt="Dribbble" className="w-6 h-6 transition-all duration-300 transform group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
-              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Instagram</div>
-              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@Future.xperience</div>
+              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Dribbble</div>
+              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxreza</div>
               <div className="hidden lg:flex gap-[6px]">
-                <Chip value="4.2k" label="Followers" />
-                <Chip value="118" label="Posts" />
+                <Chip value="1.4k" label="Followers" />
+                <Chip value="62" label="Shots" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">4.2k</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">1.4k</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">118</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Posts</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">62</span>
+                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Shots</span>
               </div>
             </div>
           </a>
