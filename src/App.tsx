@@ -207,7 +207,7 @@ export default function App() {
           <div className="card-glass lg:col-span-2 lg:row-span-1 p-[28px_30px] flex flex-col justify-center items-start text-left rounded-[32px] lg:order-2">
             <div className="font-display text-[10px] font-bold tracking-[3px] uppercase text-orange opacity-90 mb-[12px]">About</div>
             <p className="text-[14px] font-light leading-[1.85] text-t2">
-              <strong className="text-t1 font-semibold">Product designer</strong> focused on creating <strong className="text-t1 font-semibold">user-centered, minimalist, and data-driven</strong> digital experiences. Passionate about <strong className="text-t1 font-semibold">product management</strong> and building products, solving complex problems, <strong className="text-t1 font-semibold">technology</strong>, <strong className="text-t1 font-semibold">systems thinking</strong>, and crafting <strong className="text-t1 font-semibold">functional and beautiful</strong> digital experiences.
+              <strong className="text-t1 font-semibold">Product designer</strong> focused on creating <strong className="text-t1 font-semibold">user-centered</strong>, minimalist, and <strong className="text-t1 font-semibold">data-driven</strong> digital experiences. Passionate about <strong className="text-t1 font-semibold">product management</strong> and building products, solving complex problems, technology, <strong className="text-t1 font-semibold">systems thinking</strong>, and crafting <strong className="text-t1 font-semibold">functional and beautiful</strong> digital experiences.
             </p>
           </div>
 
