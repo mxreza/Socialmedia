@@ -11,14 +11,26 @@ const Background = () => (
   <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-[#050e0c]">
     <div className="dot-grid" />
     <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_70%_at_50%_50%,rgba(5,35,30,0.65)_0%,transparent_75%)]" />
-    {/* Teal blobs */}
-    <div className="blob animate-blob w-[850px] h-[720px] opacity-[0.45] -top-[18%] -left-[15%] bg-[radial-gradient(circle,rgba(10,148,133,0.48)_0%,transparent_70%)]" />
-    <div className="blob animate-blob-slow w-[680px] h-[600px] opacity-[0.35] bottom-[2%] -right-[10%] bg-[radial-gradient(circle,rgba(6,96,84,0.38)_0%,transparent_70%)]" />
-    <div className="blob animate-blob w-[450px] h-[420px] opacity-[0.25] top-[38%] left-[32%] bg-[radial-gradient(circle,rgba(14,207,182,0.22)_0%,transparent_70%)]" />
-    {/* Orange blobs */}
-    <div className="blob animate-blob w-[780px] h-[680px] opacity-[0.62] -top-[5%] right-[0%] bg-[radial-gradient(circle,rgba(220,72,10,0.48)_0%,transparent_70%)]" />
-    <div className="blob animate-blob-slow w-[580px] h-[520px] opacity-[0.52] bottom-[14%] left-[14%] bg-[radial-gradient(circle,rgba(255,80,20,0.34)_0%,transparent_70%)]" />
-    <div className="blob animate-blob-reverse w-[450px] h-[380px] opacity-[0.44] top-[52%] right-[25%] bg-[radial-gradient(circle,rgba(255,100,30,0.24)_0%,transparent_70%)]" />
+    
+    {!isMobile ? (
+      <>
+        {/* Teal blobs - Desktop only */}
+        <div className="blob animate-blob w-[850px] h-[720px] opacity-[0.45] -top-[18%] -left-[15%] bg-[radial-gradient(circle,rgba(10,148,133,0.48)_0%,transparent_70%)]" />
+        <div className="blob animate-blob-slow w-[680px] h-[600px] opacity-[0.35] bottom-[2%] -right-[10%] bg-[radial-gradient(circle,rgba(6,96,84,0.38)_0%,transparent_70%)]" />
+        <div className="blob animate-blob w-[450px] h-[420px] opacity-[0.25] top-[38%] left-[32%] bg-[radial-gradient(circle,rgba(14,207,182,0.22)_0%,transparent_70%)]" />
+        {/* Orange blobs - Desktop only */}
+        <div className="blob animate-blob w-[780px] h-[680px] opacity-[0.62] -top-[5%] right-[0%] bg-[radial-gradient(circle,rgba(220,72,10,0.48)_0%,transparent_70%)]" />
+        <div className="blob animate-blob-slow w-[580px] h-[520px] opacity-[0.52] bottom-[14%] left-[14%] bg-[radial-gradient(circle,rgba(255,80,20,0.34)_0%,transparent_70%)]" />
+        <div className="blob animate-blob-reverse w-[450px] h-[380px] opacity-[0.44] top-[52%] right-[25%] bg-[radial-gradient(circle,rgba(255,100,30,0.24)_0%,transparent_70%)]" />
+      </>
+    ) : (
+      <>
+        {/* Minimal Static Blobs for Mobile - Reduced blur and no animation */}
+        <div className="absolute w-[400px] h-[400px] opacity-[0.15] -top-[10%] -left-[10%] bg-teal blur-[80px] rounded-full" />
+        <div className="absolute w-[400px] h-[400px] opacity-[0.2] bottom-[10%] -right-[10%] bg-orange blur-[80px] rounded-full" />
+      </>
+    )}
+    
     <div className="noise" />
   </div>
 );

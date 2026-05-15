@@ -94,16 +94,19 @@ body {
   .animate-blob, 
   .animate-blob-slow, 
   .animate-blob-reverse {
-    animation-duration: 20s; /* Much slower to reduce CPU/GPU load */
-    animation-timing-function: linear; /* Simpler than ease-in-out */
+    animation: none !important; /* Fully stop animations to save CPU */
   }
   
   .animate-pulse {
-    animation: none; /* Disable pulsing on mobile */
+    animation: none !important;
   }
 
-  .blob {
-    @apply blur-[100px]; /* Reduce blur radius for better mobile performance */
+  .noise {
+    opacity: 0.015; /* Even lighter noise for mobile performance */
+  }
+
+  .dot-grid {
+    opacity: 0.12; /* Slightly dimmer for better contrast/speed */
   }
 }
 
