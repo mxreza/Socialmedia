@@ -89,6 +89,24 @@ body {
   animation: d-float-reverse 3.5s ease-in-out infinite alternate-reverse;
 }
 
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+  .animate-blob, 
+  .animate-blob-slow, 
+  .animate-blob-reverse {
+    animation-duration: 20s; /* Much slower to reduce CPU/GPU load */
+    animation-timing-function: linear; /* Simpler than ease-in-out */
+  }
+  
+  .animate-pulse {
+    animation: none; /* Disable pulsing on mobile */
+  }
+
+  .blob {
+    @apply blur-[100px]; /* Reduce blur radius for better mobile performance */
+  }
+}
+
 @keyframes heartbeat {
   0%, 100% { box-shadow: 0 0 0 0 rgba(34, 216, 122, 0.5); }
   50% { box-shadow: 0 0 0 5px rgba(34, 216, 122, 0); }
