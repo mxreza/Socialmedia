@@ -257,6 +257,32 @@ const ProfilePattern = () => (
 );
 
 export default function App() {
+  const [stats, setStats] = useState({
+    instagram: { followers: "4.2k", posts: "118" },
+    linkedin: { connects: "2.8k", posts: "47" },
+    spotify: { playlists: "18", minutes: "45k" },
+    x: { followers: "3.2k", posts: "680" },
+    coffeebede: { fans: "12", coffees: "42" },
+    chess: { rating: "1.4k", wins: "860" },
+    dribbble: { followers: "1.4k", shots: "62" },
+    medium: { followers: "1.2k", stories: "14" },
+    virgool: { followers: "3.4k", posts: "82" }
+  });
+
+  useEffect(() => {
+    fetch("/api/social-stats")
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to load stats");
+        return res.json();
+      })
+      .then(data => {
+        setStats(data);
+      })
+      .catch(e => {
+        console.warn("Failed to load live social stats, using default values", e);
+      });
+  }, []);
+
   return (
     <div className="min-h-screen relative overflow-x-hidden">
       <CustomCursor />
@@ -278,9 +304,6 @@ export default function App() {
           
           {/* Profile Card */}
           <motion.div 
-            whileHover={!isMobile ? { scale: 1.012, y: -4, rotate: 0.5 } : {}}
-            whileTap={!isMobile ? { scale: 0.96 } : {}}
-            transition={{ type: "spring", stiffness: 450, damping: 12 }}
             className="card-glass lg:col-span-2 lg:row-span-2 p-0 flex flex-col justify-end min-h-[320px] lg:min-h-[400px] rounded-[32px] lg:order-1 relative overflow-hidden"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,100,26,0.06),transparent_60%)] pointer-events-none" />
@@ -304,17 +327,16 @@ export default function App() {
               <h1 className="font-display font-medium text-[clamp(24px,3vw,36px)] leading-[1.1] text-t1 mb-[12px]">
                 Mohammadreza<br/>Aghamohammadi
               </h1>
-              <div className="flex items-center gap-[7px] text-[15px] font-medium text-t2 tracking-[0.2px]">
-                <div className="w-[7px] h-[7px] rounded-full bg-[#22d87a] shrink-0 animate-[heartbeat_2.6s_ease-in-out_infinite]" />
-                Product Designer
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-[12px] mt-[4px]">
+                <div className="flex items-center gap-[7px] text-[15px] font-medium text-t2 tracking-[0.2px]">
+                  <div className="w-[7px] h-[7px] rounded-full bg-[#22d87a] shrink-0 animate-[heartbeat_2.6s_ease-in-out_infinite]" />
+                  Product Designer
+                </div>
               </div>
             </div>
           </motion.div>
 
           <motion.div 
-            whileHover={!isMobile ? { scale: 1.012, y: -4, rotate: -0.5 } : {}}
-            whileTap={!isMobile ? { scale: 0.96 } : {}}
-            transition={{ type: "spring", stiffness: 450, damping: 12 }}
             className="card-glass lg:col-span-2 lg:row-span-1 p-[28px_30px] flex flex-col justify-center items-start text-left rounded-[32px] lg:order-2"
           >
             <div className="font-display text-[10px] font-bold tracking-[3px] uppercase text-orange opacity-90 mb-[12px]">About</div>
@@ -333,18 +355,18 @@ export default function App() {
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Instagram</div>
               <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@Future.xperience</div>
               <div className="hidden lg:flex gap-[6px]">
-                <Chip value="4.2k" label="Followers" />
-                <Chip value="118" label="Posts" />
+                <Chip value={stats.instagram.followers} label="Followers" />
+                <Chip value={stats.instagram.posts} label="Posts" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">4.2k</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.instagram.followers}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">118</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.instagram.posts}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Posts</span>
               </div>
             </div>
@@ -360,19 +382,19 @@ export default function App() {
               <div className="font-display font-bold text-[16px] text-t1 mb-[1px] lg:mb-[3px]">LinkedIn</div>
               <div className="text-[10.5px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxreza</div>
               <div className="hidden lg:flex gap-[8px]">
-                <Chip value="2.8k" label="Connects" />
-                <Chip value="47" label="Posts" />
+                <Chip value={stats.linkedin.connects} label="Connects" />
+                <Chip value={stats.linkedin.posts} label="Posts" />
                 <Chip value="Professional" label="Mode" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">2.8k</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.linkedin.connects}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Connects</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">47</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.linkedin.posts}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Posts</span>
               </div>
             </div>
@@ -388,18 +410,18 @@ export default function App() {
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Spotify</div>
               <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">Listening now</div>
               <div className="hidden lg:flex gap-[6px]">
-                <Chip value="18" label="Playlists" />
-                <Chip value="45k" label="Minutes" />
+                <Chip value={stats.spotify.playlists} label="Playlists" />
+                <Chip value={stats.spotify.minutes} label="Minutes" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">18</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.spotify.playlists}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Playlists</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">45k</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.spotify.minutes}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Min</span>
               </div>
             </div>
@@ -415,18 +437,18 @@ export default function App() {
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">X</div>
               <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxrezax</div>
               <div className="hidden lg:flex gap-[6px]">
-                <Chip value="3.2k" label="Followers" />
-                <Chip value="680" label="Posts" />
+                <Chip value={stats.x.followers} label="Followers" />
+                <Chip value={stats.x.posts} label="Posts" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">3.2k</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.x.followers}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">680</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.x.posts}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Posts</span>
               </div>
             </div>
@@ -444,12 +466,12 @@ export default function App() {
             </div>
             <div className="flex items-center gap-[11px] shrink-0 pr-10 relative z-[1]">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[14px] text-t1 leading-none">12</span>
+                <span className="font-display font-bold text-[14px] text-t1 leading-none">{stats.coffeebede.fans}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Fans</span>
               </div>
               <div className="w-[1px] h-[22px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[14px] text-t1 leading-none">42</span>
+                <span className="font-display font-bold text-[14px] text-t1 leading-none">{stats.coffeebede.coffees}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Coffees</span>
               </div>
             </div>
@@ -467,12 +489,12 @@ export default function App() {
             </div>
             <div className="flex items-center gap-[11px] shrink-0 pr-10 relative z-[1]">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[14px] text-t1 leading-none">1.4k</span>
+                <span className="font-display font-bold text-[14px] text-t1 leading-none">{stats.chess.rating}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Rating</span>
               </div>
               <div className="w-[1px] h-[22px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[14px] text-t1 leading-none">860</span>
+                <span className="font-display font-bold text-[14px] text-t1 leading-none">{stats.chess.wins}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Wins</span>
               </div>
             </div>
@@ -488,18 +510,18 @@ export default function App() {
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Dribbble</div>
               <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxreza</div>
               <div className="hidden lg:flex gap-[6px]">
-                <Chip value="1.4k" label="Followers" />
-                <Chip value="62" label="Shots" />
+                <Chip value={stats.dribbble.followers} label="Followers" />
+                <Chip value={stats.dribbble.shots} label="Shots" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">1.4k</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.dribbble.followers}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">62</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.dribbble.shots}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Shots</span>
               </div>
             </div>
@@ -515,18 +537,18 @@ export default function App() {
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Medium</div>
               <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxreza</div>
               <div className="hidden lg:flex gap-[6px]">
-                <Chip value="1.2k" label="Followers" />
-                <Chip value="14" label="Stories" />
+                <Chip value={stats.medium.followers} label="Followers" />
+                <Chip value={stats.medium.stories} label="Stories" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">1.2k</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.medium.followers}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">14</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.medium.stories}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Stories</span>
               </div>
             </div>
@@ -542,18 +564,18 @@ export default function App() {
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Virgool</div>
               <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxreza</div>
               <div className="hidden lg:flex gap-[6px]">
-                <Chip value="3.4k" label="Followers" />
-                <Chip value="82" label="Posts" />
+                <Chip value={stats.virgool.followers} label="Followers" />
+                <Chip value={stats.virgool.posts} label="Posts" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">3.4k</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.virgool.followers}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">82</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.virgool.posts}</span>
                 <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Posts</span>
               </div>
             </div>
