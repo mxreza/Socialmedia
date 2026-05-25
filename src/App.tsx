@@ -42,8 +42,8 @@ const CustomCursor = () => {
         }}
         animate={{
           scale: isHovering ? 1.5 : 1,
-          borderColor: isHovering ? "rgba(255, 94, 26, 0.6)" : "rgba(14, 207, 182, 0.5)",
-          backgroundColor: isHovering ? "rgba(255, 94, 26, 0.05)" : "rgba(14, 207, 182, 0)"
+          borderColor: isHovering ? "rgba(255, 109, 76, 0.6)" : "rgba(44, 216, 228, 0.5)",
+          backgroundColor: isHovering ? "rgba(255, 109, 76, 0.05)" : "rgba(44, 216, 228, 0)"
         }}
       />
       <motion.div
@@ -54,7 +54,7 @@ const CustomCursor = () => {
         }}
         animate={{
           scale: isHovering ? 0.5 : 1,
-          backgroundColor: isHovering ? "#ff5e1a" : "#ffffff"
+          backgroundColor: isHovering ? "#FF6D4C" : "#ffffff"
         }}
       />
     </>
@@ -100,16 +100,16 @@ const Background = () => (
         <div className="blob animate-blob w-[850px] h-[720px] opacity-[0.45] -top-[18%] -left-[15%] bg-[radial-gradient(circle,rgba(10,148,133,0.48)_0%,transparent_70%)]" />
         <div className="blob animate-blob-slow w-[680px] h-[600px] opacity-[0.35] bottom-[2%] -right-[10%] bg-[radial-gradient(circle,rgba(6,96,84,0.38)_0%,transparent_70%)]" />
         <div className="blob animate-blob w-[450px] h-[420px] opacity-[0.25] top-[38%] left-[32%] bg-[radial-gradient(circle,rgba(14,207,182,0.22)_0%,transparent_70%)]" />
-        {/* Orange blobs - Desktop only */}
-        <div className="blob animate-blob w-[780px] h-[680px] opacity-[0.62] -top-[5%] right-[0%] bg-[radial-gradient(circle,rgba(220,72,10,0.48)_0%,transparent_70%)]" />
-        <div className="blob animate-blob-slow w-[580px] h-[520px] opacity-[0.52] bottom-[14%] left-[14%] bg-[radial-gradient(circle,rgba(255,80,20,0.34)_0%,transparent_70%)]" />
-        <div className="blob animate-blob-reverse w-[450px] h-[380px] opacity-[0.44] top-[52%] right-[25%] bg-[radial-gradient(circle,rgba(255,100,30,0.24)_0%,transparent_70%)]" />
+        {/* Red/Coral brand gradient blobs - Desktop only */}
+        <div className="blob animate-blob w-[780px] h-[680px] opacity-[0.55] -top-[5%] right-[0%] bg-[radial-gradient(circle,rgba(212,20,13,0.42)_0%,transparent_70%)]" />
+        <div className="blob animate-blob-slow w-[580px] h-[520px] opacity-[0.45] bottom-[14%] left-[14%] bg-[radial-gradient(circle,rgba(255,109,76,0.30)_0%,transparent_70%)]" />
+        <div className="blob animate-blob-reverse w-[450px] h-[380px] opacity-[0.38] top-[52%] right-[25%] bg-[radial-gradient(circle,rgba(255,109,76,0.20)_0%,transparent_70%)]" />
       </>
     ) : (
       <>
         {/* Minimal Static Blobs for Mobile - Reduced blur and no animation */}
         <div className="absolute w-[400px] h-[400px] opacity-[0.15] -top-[10%] -left-[10%] bg-teal blur-[80px] rounded-full" />
-        <div className="absolute w-[400px] h-[400px] opacity-[0.2] bottom-[10%] -right-[10%] bg-orange blur-[80px] rounded-full" />
+        <div className="absolute w-[400px] h-[400px] opacity-[0.18] bottom-[10%] -right-[10%] bg-orange blur-[80px] rounded-full" />
       </>
     )}
     
@@ -118,9 +118,9 @@ const Background = () => (
 );
 
 const Arrow = ({ absolute, centered }: { absolute?: boolean; centered?: boolean }) => (
-  <div className={`w-[30px] h-[30px] rounded-full bg-orange/14 border border-orange/28 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-[linear-gradient(135deg,#ff5e1a,#ff7242)] group-hover:border-[#ff5e1a]/50 group-hover:shadow-[0_0_14px_rgba(255,80,20,0.4)] ${absolute ? (centered ? 'absolute top-1/2 -translate-y-1/2 right-5 z-10' : 'absolute top-1/2 -translate-y-1/2 lg:top-5 lg:translate-y-0 right-5 z-10') : ''}`}>
+  <div className={`w-[30px] h-[30px] rounded-full bg-orange/14 border border-orange/28 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-[linear-gradient(135deg,#D4140D,#FF6D4C)] group-hover:border-[#FF6D4C]/50 group-hover:shadow-[0_0_14px_rgba(212,20,13,0.45)] ${absolute ? (centered ? 'absolute top-1/2 -translate-y-1/2 right-5 z-10' : 'absolute top-1/2 -translate-y-1/2 lg:top-5 lg:translate-y-0 right-5 z-10') : ''}`}>
     <svg className="w-[13px] h-[13px]" viewBox="0 0 14 14">
-      <path className="stroke-orange-hi group-hover:stroke-white/95" d="M2 12L12 2M12 2H6M12 2V8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <path className="stroke-orange group-hover:stroke-white/95" d="M2 12L12 2M12 2H6M12 2V8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
   </div>
 );
@@ -136,8 +136,8 @@ const ProfilePattern = () => (
   <div className="absolute inset-0 z-[2] pointer-events-none opacity-[0.65] [mask-image:linear-gradient(to_bottom,black_45%,transparent_98%)]">
     <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full scale-110">
       {/* Cosmic Background Nodes */}
-      <circle cx="250" cy="180" r="220" stroke="rgba(14,207,182,0.18)" strokeWidth="0.5" strokeDasharray="5 10" />
-      <circle cx="250" cy="180" r="160" stroke="rgba(255,94,26,0.14)" strokeWidth="0.5" />
+      <circle cx="250" cy="180" r="220" stroke="rgba(44,216,228,0.18)" strokeWidth="0.5" strokeDasharray="5 10" />
+      <circle cx="250" cy="180" r="160" stroke="rgba(255,109,76,0.14)" strokeWidth="0.5" />
       
       {/* Stars & Pulsing Points */}
       <g opacity=".85">
@@ -162,7 +162,7 @@ const ProfilePattern = () => (
       <foreignObject x="20" y="110" width="20" height="20">
         <Zap className="w-full h-full text-teal opacity-30" strokeWidth={1.5} />
       </foreignObject>
-
+ 
       {/* Area 2 (Top Right) */}
       <foreignObject x="380" y="25" width="24" height="24" transform="rotate(15)">
         <Orbit className="w-full h-full text-teal opacity-50" strokeWidth={1.2} />
@@ -173,7 +173,7 @@ const ProfilePattern = () => (
       <foreignObject x="330" y="70" width="26" height="26">
         <Monitor className="w-full h-full text-teal opacity-25" strokeWidth={1.5} />
       </foreignObject>
-
+ 
       {/* Area 3 (Center Cluster) */}
       <foreignObject x="180" y="45" width="18" height="18">
         <Zap className="w-full h-full text-orange opacity-40" strokeWidth={1.5} />
@@ -184,7 +184,7 @@ const ProfilePattern = () => (
       <foreignObject x="210" y="320" width="25" height="25">
         <Orbit className="w-full h-full text-orange opacity-30" strokeWidth={1.2} />
       </foreignObject>
-
+ 
       {/* Area 4 (Bottom Left) */}
       <foreignObject x="50" y="280" width="24" height="24" transform="rotate(12)">
         <Palette className="w-full h-full text-teal opacity-45" strokeWidth={1.5} />
@@ -195,7 +195,7 @@ const ProfilePattern = () => (
       <foreignObject x="30" y="340" width="22" height="22">
         <Zap className="w-full h-full text-teal opacity-25" strokeWidth={1.5} />
       </foreignObject>
-
+ 
       {/* Area 5 (Bottom Right) */}
       <foreignObject x="420" y="280" width="28" height="28" transform="rotate(-10)">
         <Rocket className="w-full h-full text-orange opacity-50" strokeWidth={1.2} />
@@ -206,7 +206,7 @@ const ProfilePattern = () => (
       <foreignObject x="450" y="350" width="20" height="20">
         <Orbit className="w-full h-full text-orange opacity-25" strokeWidth={1.2} />
       </foreignObject>
-
+ 
       {/* Area 6 (Mid Sides) */}
       <foreignObject x="460" y="180" width="18" height="18">
         <Zap className="w-full h-full text-teal opacity-40" strokeWidth={1.5} />
@@ -220,7 +220,7 @@ const ProfilePattern = () => (
       <foreignObject x="390" y="160" width="22" height="22">
         <Orbit className="w-full h-full text-orange opacity-35" strokeWidth={1.2} />
       </foreignObject>
-
+ 
       {/* Existing Abstract Icons (Brain, Atom, etc.) distributed */}
       <foreignObject x="250" y="80" width="18" height="18">
         <Brain className="w-full h-full text-teal opacity-40" strokeWidth={1.5} />
@@ -231,27 +231,27 @@ const ProfilePattern = () => (
       <foreignObject x="320" y="240" width="20" height="20">
         <Cpu className="w-full h-full text-teal opacity-30" strokeWidth={1} />
       </foreignObject>
-
+ 
       {/* Grid Lines */}
-      <path d="M0 200 H500 M250 0 V400" stroke="rgba(14,207,182,0.1)" strokeWidth="0.5" />
+      <path d="M0 200 H500 M250 0 V400" stroke="rgba(44,216,228,0.1)" strokeWidth="0.5" />
       
       {/* Orbital Design Rings */}
-      <ellipse cx="250" cy="180" rx="300" ry="95" stroke="rgba(255,94,26,0.15)" strokeWidth="1.2" transform="rotate(-20, 250, 180)" />
-      <ellipse cx="250" cy="180" rx="340" ry="130" stroke="rgba(14,207,182,0.08)" strokeWidth="0.8" transform="rotate(15, 250, 180)" />
+      <ellipse cx="250" cy="180" rx="300" ry="95" stroke="rgba(255,109,76,0.15)" strokeWidth="1.2" transform="rotate(-20, 250, 180)" />
+      <ellipse cx="250" cy="180" rx="340" ry="130" stroke="rgba(44,216,228,0.08)" strokeWidth="0.8" transform="rotate(15, 250, 180)" />
       
       {/* Pixel nodes */}
-      <rect x="440" y="200" width="4" height="4" fill="#0ecfb6" opacity=".4" />
-      <rect x="450" y="210" width="4" height="4" fill="#ff5e1a" opacity=".4" />
-      <rect x="50" y="100" width="4" height="4" fill="#0ecfb6" opacity=".4" />
+      <rect x="440" y="200" width="4" height="4" fill="#2cd8e4" opacity=".4" />
+      <rect x="450" y="210" width="4" height="4" fill="#FF6D4C" opacity=".4" />
+      <rect x="50" y="100" width="4" height="4" fill="#2cd8e4" opacity=".4" />
       <rect x="40" y="40" width="3" height="3" fill="#fff" opacity=".3" />
       <rect x="460" y="350" width="3" height="3" fill="#fff" opacity=".3" />
-
-      <circle cx="250" cy="180" r="100" stroke="rgba(14,207,182,0.12)" strokeWidth="0.5" strokeDasharray="2 4" />
-      <circle cx="250" cy="180" r="260" stroke="rgba(255,94,26,0.06)" strokeWidth="0.5" />
-
-      <path d="M80 340 Q 250 280 420 340" stroke="rgba(14,207,182,0.3)" strokeWidth="2" fill="none" opacity=".5" />
-      <circle cx="80" cy="340" r="3" fill="#ff5e1a" opacity=".6" />
-      <circle cx="420" cy="340" r="3" fill="#ff5e1a" opacity=".6" />
+ 
+      <circle cx="250" cy="180" r="100" stroke="rgba(44,216,228,0.12)" strokeWidth="0.5" strokeDasharray="2 4" />
+      <circle cx="250" cy="180" r="260" stroke="rgba(255,109,76,0.06)" strokeWidth="0.5" />
+ 
+      <path d="M80 340 Q 250 280 420 340" stroke="rgba(44,216,228,0.3)" strokeWidth="2" fill="none" opacity=".5" />
+      <circle cx="80" cy="340" r="3" fill="#FF6D4C" opacity=".6" />
+      <circle cx="420" cy="340" r="3" fill="#FF6D4C" opacity=".6" />
     </svg>
   </div>
 );
@@ -306,10 +306,10 @@ export default function App() {
           <motion.div 
             className="card-glass lg:col-span-2 lg:row-span-2 p-0 flex flex-col justify-end min-h-[320px] lg:min-h-[400px] rounded-[32px] lg:order-1 relative overflow-hidden"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,100,26,0.06),transparent_60%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,109,76,0.08),rgba(212,20,13,0.03),transparent_60%)] pointer-events-none" />
             {!isMobile && <ProfilePattern />}
             <div className="relative z-[3] p-[24px_26px_28px] flex flex-col items-center text-center lg:items-start lg:text-left">
-              <div className="w-[140px] h-[140px] rounded-full p-[3px] bg-[linear-gradient(135deg,#0ecfb6,#ff5e1a)] mb-[20px] shrink-0 shadow-[0_0_0_6px_rgba(14,207,182,0.10),0_8px_28px_rgba(0,0,0,0.50)]">
+              <div className="w-[140px] h-[140px] rounded-full p-[3px] bg-[linear-gradient(135deg,#2cd8e4,#FF6D4C,#D4140D)] mb-[20px] shrink-0 shadow-[0_0_0_6px_rgba(44,216,228,0.10),0_8px_28px_rgba(0,0,0,0.50)]">
                 <div className="w-full h-full rounded-full bg-[linear-gradient(145deg,#0d3530,#08201c)] flex items-center justify-center overflow-hidden font-display font-bold text-[20px] text-teal tracking-[0.5px]">
                   <img 
                     src="/profile.jpg" 
