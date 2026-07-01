@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
+import profileImg from "./assets/images/profile.jpg";
 
 import { Coffee, Rocket, Cpu, Zap, Brain, Palette, Atom, Sparkles, Monitor, Orbit, Instagram, Linkedin, Dribbble, Trophy } from "lucide-react";
 
@@ -19,14 +20,20 @@ const CustomCursor = () => {
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
-      
-      const target = e.target as HTMLElement;
-      setIsHovering(!!target.closest('a, button, .card-glass-hover'));
     };
 
-    window.addEventListener("mousemove", moveCursor);
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target) {
+        setIsHovering(!!target.closest("a, button, .card-glass-hover, [role='button']"));
+      }
+    };
+
+    window.addEventListener("mousemove", moveCursor, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
     return () => {
       window.removeEventListener("mousemove", moveCursor);
+      window.removeEventListener("mouseover", handleMouseOver);
     };
   }, []);
 
@@ -89,7 +96,7 @@ const VirgoolIcon = ({ className }: { className?: string }) => (
 
 // --- Components ---
 
-const Background = () => (
+const Background = React.memo(() => (
   <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-[#050e0c]">
     <div className="dot-grid" />
     <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_70%_at_50%_50%,rgba(5,35,30,0.65)_0%,transparent_75%)]" />
@@ -115,24 +122,24 @@ const Background = () => (
     
     <div className="noise" />
   </div>
-);
+));
 
-const Arrow = ({ absolute, centered }: { absolute?: boolean; centered?: boolean }) => (
+const Arrow = React.memo(({ absolute, centered }: { absolute?: boolean; centered?: boolean }) => (
   <div className={`w-[30px] h-[30px] rounded-full bg-orange/14 border border-orange/28 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-[linear-gradient(135deg,#D4140D,#FF6D4C)] group-hover:border-[#FF6D4C]/50 group-hover:shadow-[0_0_14px_rgba(212,20,13,0.45)] ${absolute ? (centered ? 'absolute top-1/2 -translate-y-1/2 right-5 z-10' : 'absolute top-1/2 -translate-y-1/2 lg:top-5 lg:translate-y-0 right-5 z-10') : ''}`}>
     <svg className="w-[13px] h-[13px]" viewBox="0 0 14 14">
       <path className="stroke-orange group-hover:stroke-white/95" d="M2 12L12 2M12 2H6M12 2V8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
   </div>
-);
+));
 
-const Chip = ({ value, label }: { value: string; label: string }) => (
+const Chip = React.memo(({ value, label }: { value: string; label: string }) => (
   <div className="flex-1 bg-orange/8 border border-orange/15 rounded-[9px] p-[5px_9px_6px] flex flex-col gap-[2px] transition-colors duration-200 group-hover:bg-orange/13 group-hover:border-orange/28">
     <span className="font-display font-bold text-[14.5px] text-t1 leading-none">{value}</span>
     <span className="text-[8.5px] text-t3 uppercase tracking-[0.5px] font-semibold">{label}</span>
   </div>
-);
+));
 
-const ProfilePattern = () => (
+const ProfilePattern = React.memo(() => (
   <div className="absolute inset-0 z-[2] pointer-events-none opacity-[0.65] [mask-image:linear-gradient(to_bottom,black_45%,transparent_98%)]">
     <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full scale-110">
       {/* Cosmic Background Nodes */}
@@ -254,7 +261,7 @@ const ProfilePattern = () => (
       <circle cx="420" cy="340" r="3" fill="#FF6D4C" opacity=".6" />
     </svg>
   </div>
-);
+));
 
 export default function App() {
   const [stats, setStats] = useState({
@@ -269,19 +276,7 @@ export default function App() {
     virgool: { followers: "3.4k", posts: "82" }
   });
 
-  useEffect(() => {
-    fetch("/api/social-stats")
-      .then(res => {
-        if (!res.ok) throw new Error("Failed to load stats");
-        return res.json();
-      })
-      .then(data => {
-        setStats(data);
-      })
-      .catch(e => {
-        console.warn("Failed to load live social stats, using default values", e);
-      });
-  }, []);
+
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
@@ -312,12 +307,12 @@ export default function App() {
               <div className="w-[140px] h-[140px] rounded-full p-[3px] bg-[linear-gradient(135deg,#2cd8e4,#FF6D4C,#D4140D)] mb-[20px] shrink-0 shadow-[0_0_0_6px_rgba(44,216,228,0.10),0_8px_28px_rgba(0,0,0,0.50)]">
                 <div className="w-full h-full rounded-full bg-[linear-gradient(145deg,#0d3530,#08201c)] flex items-center justify-center overflow-hidden font-display font-bold text-[20px] text-teal tracking-[0.5px]">
                   <img 
-                    src="/profile.jpg" 
+                    src={profileImg} 
                     alt="Mohammadreza Aghamohammadi" 
                     onError={(e) => { 
                       const target = e.target as HTMLImageElement;
                       if (!target.src.includes('images.unsplash.com')) {
-                        target.src = "https://media.licdn.com/dms/image/v2/D4E03AQHxxJKEuTTosQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1710083399268?e=1780531200&v=beta&t=sYRv8oA4Ch3_LFx9XPLXF-_NHw4Wiv6ENb6a6UjV9Zo";
+                        target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400";
                       }
                     }} 
                     className="w-full h-full object-cover" 
