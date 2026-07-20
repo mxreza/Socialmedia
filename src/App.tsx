@@ -9,6 +9,12 @@ const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i
 const CustomCursor = () => {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
+  
+  const springConfig = { damping: 30, stiffness: 300, mass: 0.6 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
@@ -16,22 +22,52 @@ const CustomCursor = () => {
       cursorY.set(e.clientY);
     };
 
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target) {
+        setIsHovering(!!target.closest("a, button, .card-glass-hover, [role='button']"));
+      }
+    };
+
     window.addEventListener("mousemove", moveCursor, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
     return () => {
       window.removeEventListener("mousemove", moveCursor);
+      window.removeEventListener("mouseover", handleMouseOver);
     };
   }, [cursorX, cursorY]);
 
   if (isMobile) return null;
 
   return (
-    <motion.div
-      className="fixed top-0 left-0 w-2.5 h-2.5 bg-teal rounded-full pointer-events-none z-[9999] -ml-[5px] -mt-[5px] mix-blend-screen"
-      style={{
-        x: cursorX,
-        y: cursorY,
-      }}
-    />
+    <>
+      {/* Outer Ring */}
+      <motion.div
+        className="fixed top-0 left-0 w-8 h-8 border border-teal/50 rounded-full pointer-events-none z-[9999] mix-blend-screen -ml-4 -mt-4"
+        style={{
+          x: cursorXSpring,
+          y: cursorYSpring,
+        }}
+        animate={{
+          scale: isHovering ? 1.6 : 1,
+          borderColor: isHovering ? "rgba(255, 109, 76, 0.7)" : "rgba(44, 216, 228, 0.5)",
+          backgroundColor: isHovering ? "rgba(255, 109, 76, 0.08)" : "rgba(44, 216, 228, 0)"
+        }}
+        transition={{ type: "spring", stiffness: 400, damping: 28 }}
+      />
+      {/* Inner Dot */}
+      <motion.div
+        className="fixed top-0 left-0 w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-[10000] -ml-0.75 -mt-0.75"
+        style={{
+          x: cursorX,
+          y: cursorY,
+        }}
+        animate={{
+          scale: isHovering ? 0 : 1,
+        }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
+      />
+    </>
   );
 };
 
