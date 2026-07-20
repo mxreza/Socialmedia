@@ -9,12 +9,6 @@ const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i
 const CustomCursor = () => {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  
-  const springConfig = { damping: 25, stiffness: 250, mass: 0.5 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
-
-  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
@@ -22,49 +16,22 @@ const CustomCursor = () => {
       cursorY.set(e.clientY);
     };
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target) {
-        setIsHovering(!!target.closest("a, button, .card-glass-hover, [role='button']"));
-      }
-    };
-
     window.addEventListener("mousemove", moveCursor, { passive: true });
-    window.addEventListener("mouseover", handleMouseOver, { passive: true });
     return () => {
       window.removeEventListener("mousemove", moveCursor);
-      window.removeEventListener("mouseover", handleMouseOver);
     };
-  }, []);
+  }, [cursorX, cursorY]);
 
   if (isMobile) return null;
 
   return (
-    <>
-      <motion.div
-        className="fixed top-0 left-0 w-10 h-10 border border-teal/50 rounded-full pointer-events-none z-[9999] mix-blend-screen -ml-5 -mt-5"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-        }}
-        animate={{
-          scale: isHovering ? 1.5 : 1,
-          borderColor: isHovering ? "rgba(255, 109, 76, 0.6)" : "rgba(44, 216, 228, 0.5)",
-          backgroundColor: isHovering ? "rgba(255, 109, 76, 0.05)" : "rgba(44, 216, 228, 0)"
-        }}
-      />
-      <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-[10000] -ml-0.75 -mt-0.75"
-        style={{
-          x: cursorX,
-          y: cursorY,
-        }}
-        animate={{
-          scale: isHovering ? 0.5 : 1,
-          backgroundColor: isHovering ? "#FF6D4C" : "#ffffff"
-        }}
-      />
-    </>
+    <motion.div
+      className="fixed top-0 left-0 w-2.5 h-2.5 bg-teal rounded-full pointer-events-none z-[9999] -ml-[5px] -mt-[5px] mix-blend-screen"
+      style={{
+        x: cursorX,
+        y: cursorY,
+      }}
+    />
   );
 };
 
@@ -100,26 +67,6 @@ const Background = React.memo(() => (
   <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 bg-[#050e0c]">
     <div className="dot-grid" />
     <div className="absolute inset-0 bg-[radial-gradient(ellipse_95%_70%_at_50%_50%,rgba(5,35,30,0.65)_0%,transparent_75%)]" />
-    
-    {!isMobile ? (
-      <>
-        {/* Teal blobs - Desktop only */}
-        <div className="blob animate-blob w-[850px] h-[720px] opacity-[0.45] -top-[18%] -left-[15%] bg-[radial-gradient(circle,rgba(10,148,133,0.48)_0%,transparent_70%)]" />
-        <div className="blob animate-blob-slow w-[680px] h-[600px] opacity-[0.35] bottom-[2%] -right-[10%] bg-[radial-gradient(circle,rgba(6,96,84,0.38)_0%,transparent_70%)]" />
-        <div className="blob animate-blob w-[450px] h-[420px] opacity-[0.25] top-[38%] left-[32%] bg-[radial-gradient(circle,rgba(14,207,182,0.22)_0%,transparent_70%)]" />
-        {/* Red/Coral brand gradient blobs - Desktop only */}
-        <div className="blob animate-blob w-[780px] h-[680px] opacity-[0.55] -top-[5%] right-[0%] bg-[radial-gradient(circle,rgba(212,20,13,0.42)_0%,transparent_70%)]" />
-        <div className="blob animate-blob-slow w-[580px] h-[520px] opacity-[0.45] bottom-[14%] left-[14%] bg-[radial-gradient(circle,rgba(255,109,76,0.30)_0%,transparent_70%)]" />
-        <div className="blob animate-blob-reverse w-[450px] h-[380px] opacity-[0.38] top-[52%] right-[25%] bg-[radial-gradient(circle,rgba(255,109,76,0.20)_0%,transparent_70%)]" />
-      </>
-    ) : (
-      <>
-        {/* Minimal Static Blobs for Mobile - Reduced blur and no animation */}
-        <div className="absolute w-[400px] h-[400px] opacity-[0.15] -top-[10%] -left-[10%] bg-teal blur-[80px] rounded-full" />
-        <div className="absolute w-[400px] h-[400px] opacity-[0.18] bottom-[10%] -right-[10%] bg-orange blur-[80px] rounded-full" />
-      </>
-    )}
-    
     <div className="noise" />
   </div>
 ));
@@ -302,7 +249,7 @@ export default function App() {
             className="card-glass lg:col-span-2 lg:row-span-2 p-0 flex flex-col justify-end min-h-[320px] lg:min-h-[400px] rounded-[32px] lg:order-1 relative overflow-hidden"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,109,76,0.08),rgba(212,20,13,0.03),transparent_60%)] pointer-events-none" />
-            {!isMobile && <ProfilePattern />}
+            <ProfilePattern />
             <div className="relative z-[3] p-[24px_26px_28px] flex flex-col items-center text-center lg:items-start lg:text-left">
               <div className="w-[140px] h-[140px] rounded-full p-[3px] bg-[linear-gradient(135deg,#2cd8e4,#FF6D4C,#D4140D)] mb-[20px] shrink-0 shadow-[0_0_0_6px_rgba(44,216,228,0.10),0_8px_28px_rgba(0,0,0,0.50)]">
                 <div className="w-full h-full rounded-full bg-[linear-gradient(145deg,#0d3530,#08201c)] flex items-center justify-center overflow-hidden font-display font-bold text-[20px] text-teal tracking-[0.5px]">
@@ -324,7 +271,7 @@ export default function App() {
               </h1>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-[12px] mt-[4px]">
                 <div className="flex items-center gap-[7px] text-[15px] font-medium text-t2 tracking-[0.2px]">
-                  <div className="w-[7px] h-[7px] rounded-full bg-[#22d87a] shrink-0 animate-[heartbeat_2.6s_ease-in-out_infinite]" />
+                  <div className="w-[7px] h-[7px] rounded-full bg-[#22d87a] shrink-0 animate-[heartbeat_2.6s_ease-in-out_infinite]" style={{ willChange: "transform, opacity" }} />
                   Product Designer
                 </div>
               </div>
