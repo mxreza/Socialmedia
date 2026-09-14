@@ -1,5 +1,42 @@
 @import "tailwindcss";
 
+/* Self-hosted Fonts (Zero Render-Blocking external requests) */
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('/fonts/mulish-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('/fonts/mulish-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Oxanium';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/oxanium-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Oxanium';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/oxanium-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 @theme {
   --font-sans: 'Mulish', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Oxanium', sans-serif;
@@ -39,7 +76,14 @@ html {
 
 /* Glass Card Utility */
 .card-glass {
-  @apply relative overflow-hidden bg-glass backdrop-blur-[30px] border border-glass-b transition-all duration-300;
+  @apply relative overflow-hidden bg-glass backdrop-blur-[30px] border border-glass-b;
+  transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.42s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
+  will-change: transform, border-color, box-shadow;
+  backface-visibility: hidden;
   box-shadow: 
     inset 0 1.5px 0 rgba(44, 216, 228, 0.10),
     inset 0 -1px 0 rgba(0, 0, 0, 0.35),
@@ -51,6 +95,7 @@ html {
   content: '';
   @apply absolute top-0 left-[12%] right-[12%] h-[1px] z-[3] pointer-events-none;
   background: linear-gradient(90deg, transparent, rgba(44, 216, 228, 0.50), transparent);
+  transition: background 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-glass::after {
@@ -58,15 +103,25 @@ html {
   @apply absolute inset-0 z-[1] pointer-events-none;
   border-radius: inherit;
   background: linear-gradient(150deg, rgba(44, 216, 228, 0.06) 0%, rgba(255, 109, 76, 0.05) 50%, rgba(212, 20, 13, 0.03) 75%, transparent 95%);
+  transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-glass-hover {
+  cursor: pointer;
 }
 
 .card-glass-hover:hover {
-  @apply -translate-y-1.5 scale-[1.013] border-[#FF6D4C]/35;
+  transform: translateY(-5px) translateZ(0);
+  border-color: rgba(255, 109, 76, 0.38);
   box-shadow:
-    inset 0 1.5px 0 rgba(255, 109, 76, 0.16),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.40),
-    0 20px 64px rgba(0, 0, 0, 0.60),
-    0 4px 20px rgba(212, 20, 13, 0.20);
+    inset 0 1.5px 0 rgba(255, 109, 76, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.45),
+    0 20px 48px -6px rgba(0, 0, 0, 0.65),
+    0 0 28px rgba(255, 109, 76, 0.14);
+}
+
+.card-glass-hover:hover::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 109, 76, 0.65), transparent);
 }
 
 /* Mobile Performance Optimizations */
@@ -100,9 +155,13 @@ html {
   @apply fixed inset-0 opacity-[0.025] pointer-events-none z-[1];
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px;
+  transform: translateZ(0);
+  contain: strict;
 }
 
 .dot-grid {
   @apply fixed inset-0 opacity-[0.22] pointer-events-none z-0;
   background-image: url("data:image/svg+xml,%3Csvg width='36' height='36' viewBox='0 0 36 36' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='1.5' height='1.5' fill='white'/%3E%3C/svg%3E");
+  transform: translateZ(0);
+  contain: strict;
 }

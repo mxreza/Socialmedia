@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import profileImg from "./assets/images/profile.jpg";
+import profileWebp from "./assets/images/profile.webp";
 
 import { Coffee, Rocket, Cpu, Zap, Brain, Palette, Atom, Sparkles, Monitor, Orbit, Instagram, Linkedin, Dribbble, Trophy } from "lucide-react";
 
@@ -10,22 +11,40 @@ const CustomCursor = () => {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   
-  const springConfig = { damping: 30, stiffness: 300, mass: 0.6 };
+  const springConfig = { damping: 28, stiffness: 260, mass: 0.45 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
   const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && window.matchMedia && !window.matchMedia("(pointer: fine)").matches) {
+      return;
+    }
+
+    let rafId: number | null = null;
+    let pendingX = -100;
+    let pendingY = -100;
+
     const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
+      pendingX = e.clientX;
+      pendingY = e.clientY;
+      if (!isVisible) setIsVisible(true);
+      if (rafId === null) {
+        rafId = requestAnimationFrame(() => {
+          cursorX.set(pendingX);
+          cursorY.set(pendingY);
+          rafId = null;
+        });
+      }
     };
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target) {
-        setIsHovering(!!target.closest("a, button, .card-glass-hover, [role='button']"));
+        const hovering = !!target.closest("a, button, .card-glass-hover, [role='button']");
+        setIsHovering((prev) => (prev !== hovering ? hovering : prev));
       }
     };
 
@@ -34,8 +53,9 @@ const CustomCursor = () => {
     return () => {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mouseover", handleMouseOver);
+      if (rafId !== null) cancelAnimationFrame(rafId);
     };
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, isVisible]);
 
   if (isMobile) return null;
 
@@ -47,13 +67,15 @@ const CustomCursor = () => {
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
+          transform: "translateZ(0)",
+          willChange: "transform",
         }}
         animate={{
-          scale: isHovering ? 1.6 : 1,
-          borderColor: isHovering ? "rgba(255, 109, 76, 0.7)" : "rgba(44, 216, 228, 0.5)",
+          scale: isHovering ? 1.55 : 1,
+          borderColor: isHovering ? "rgba(255, 109, 76, 0.75)" : "rgba(44, 216, 228, 0.5)",
           backgroundColor: isHovering ? "rgba(255, 109, 76, 0.08)" : "rgba(44, 216, 228, 0)"
         }}
-        transition={{ type: "spring", stiffness: 400, damping: 28 }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       />
       {/* Inner Dot */}
       <motion.div
@@ -61,11 +83,14 @@ const CustomCursor = () => {
         style={{
           x: cursorX,
           y: cursorY,
+          transform: "translateZ(0)",
+          willChange: "transform",
         }}
         animate={{
           scale: isHovering ? 0 : 1,
+          opacity: isHovering ? 0 : 1,
         }}
-        transition={{ duration: 0.15, ease: "easeOut" }}
+        transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
       />
     </>
   );
@@ -108,15 +133,15 @@ const Background = React.memo(() => (
 ));
 
 const Arrow = React.memo(({ absolute, centered }: { absolute?: boolean; centered?: boolean }) => (
-  <div className={`w-[30px] h-[30px] rounded-full bg-orange/14 border border-orange/28 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-[linear-gradient(135deg,#D4140D,#FF6D4C)] group-hover:border-[#FF6D4C]/50 group-hover:shadow-[0_0_14px_rgba(212,20,13,0.45)] ${absolute ? (centered ? 'absolute top-1/2 -translate-y-1/2 right-5 z-10' : 'absolute top-1/2 -translate-y-1/2 lg:top-5 lg:translate-y-0 right-5 z-10') : ''}`}>
-    <svg className="w-[13px] h-[13px]" viewBox="0 0 14 14">
-      <path className="stroke-orange group-hover:stroke-white/95" d="M2 12L12 2M12 2H6M12 2V8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+  <div className={`w-[30px] h-[30px] rounded-full bg-orange/14 border border-orange/28 flex items-center justify-center shrink-0 transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-[linear-gradient(135deg,#D4140D,#FF6D4C)] group-hover:border-[#FF6D4C]/50 group-hover:shadow-[0_0_14px_rgba(212,20,13,0.45)] group-hover:scale-105 ${absolute ? (centered ? 'absolute top-1/2 -translate-y-1/2 right-5 z-10' : 'absolute top-1/2 -translate-y-1/2 lg:top-5 lg:translate-y-0 right-5 z-10') : ''}`}>
+    <svg className="w-[13px] h-[13px] transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 14 14">
+      <path className="stroke-orange group-hover:stroke-white/95 transition-colors duration-300" d="M2 12L12 2M12 2H6M12 2V8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
   </div>
 ));
 
 const Chip = React.memo(({ value, label }: { value: string; label: string }) => (
-  <div className="flex-1 bg-orange/8 border border-orange/15 rounded-[9px] p-[5px_9px_6px] flex flex-col gap-[2px] transition-colors duration-200 group-hover:bg-orange/13 group-hover:border-orange/28">
+  <div className="flex-1 bg-orange/8 border border-orange/15 rounded-[9px] p-[5px_9px_6px] flex flex-col gap-[2px] transition-colors duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-orange/13 group-hover:border-orange/28">
     <span className="font-display font-bold text-[14.5px] text-t1 leading-none">{value}</span>
     <span className="text-[8.5px] text-t3 uppercase tracking-[0.5px] font-semibold">{label}</span>
   </div>
@@ -143,84 +168,84 @@ const ProfilePattern = React.memo(() => (
       </g>
       
       {/* Lucide Icons in Pattern - Area 1 (Top Left) */}
-      <foreignObject x="40" y="30" width="22" height="22" transform="rotate(-15)">
-        <Monitor className="w-full h-full text-teal opacity-40" strokeWidth={1.5} />
-      </foreignObject>
-      <foreignObject x="85" y="65" width="28" height="28" transform="rotate(10)">
-        <Rocket className="w-full h-full text-orange opacity-45" strokeWidth={1.2} />
-      </foreignObject>
-      <foreignObject x="20" y="110" width="20" height="20">
-        <Zap className="w-full h-full text-teal opacity-30" strokeWidth={1.5} />
-      </foreignObject>
+      <g transform="translate(40, 30) rotate(-15)">
+        <Monitor size={22} className="text-teal opacity-40" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(85, 65) rotate(10)">
+        <Rocket size={28} className="text-orange opacity-45" strokeWidth={1.2} />
+      </g>
+      <g transform="translate(20, 110)">
+        <Zap size={20} className="text-teal opacity-30" strokeWidth={1.5} />
+      </g>
  
       {/* Area 2 (Top Right) */}
-      <foreignObject x="380" y="25" width="24" height="24" transform="rotate(15)">
-        <Orbit className="w-full h-full text-teal opacity-50" strokeWidth={1.2} />
-      </foreignObject>
-      <foreignObject x="440" y="60" width="20" height="20">
-        <Palette className="w-full h-full text-orange opacity-35" strokeWidth={1.5} />
-      </foreignObject>
-      <foreignObject x="330" y="70" width="26" height="26">
-        <Monitor className="w-full h-full text-teal opacity-25" strokeWidth={1.5} />
-      </foreignObject>
+      <g transform="translate(380, 25) rotate(15)">
+        <Orbit size={24} className="text-teal opacity-50" strokeWidth={1.2} />
+      </g>
+      <g transform="translate(440, 60)">
+        <Palette size={20} className="text-orange opacity-35" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(330, 70)">
+        <Monitor size={26} className="text-teal opacity-25" strokeWidth={1.5} />
+      </g>
  
       {/* Area 3 (Center Cluster) */}
-      <foreignObject x="180" y="45" width="18" height="18">
-        <Zap className="w-full h-full text-orange opacity-40" strokeWidth={1.5} />
-      </foreignObject>
-      <foreignObject x="290" y="140" width="22" height="22" transform="rotate(-20)">
-        <Rocket className="w-full h-full text-teal opacity-35" strokeWidth={1.2} />
-      </foreignObject>
-      <foreignObject x="210" y="320" width="25" height="25">
-        <Orbit className="w-full h-full text-orange opacity-30" strokeWidth={1.2} />
-      </foreignObject>
+      <g transform="translate(180, 45)">
+        <Zap size={18} className="text-orange opacity-40" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(290, 140) rotate(-20)">
+        <Rocket size={22} className="text-teal opacity-35" strokeWidth={1.2} />
+      </g>
+      <g transform="translate(210, 320)">
+        <Orbit size={25} className="text-orange opacity-30" strokeWidth={1.2} />
+      </g>
  
       {/* Area 4 (Bottom Left) */}
-      <foreignObject x="50" y="280" width="24" height="24" transform="rotate(12)">
-        <Palette className="w-full h-full text-teal opacity-45" strokeWidth={1.5} />
-      </foreignObject>
-      <foreignObject x="110" y="320" width="20" height="20">
-        <Monitor className="w-full h-full text-orange opacity-30" strokeWidth={1.5} />
-      </foreignObject>
-      <foreignObject x="30" y="340" width="22" height="22">
-        <Zap className="w-full h-full text-teal opacity-25" strokeWidth={1.5} />
-      </foreignObject>
+      <g transform="translate(50, 280) rotate(12)">
+        <Palette size={24} className="text-teal opacity-45" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(110, 320)">
+        <Monitor size={20} className="text-orange opacity-30" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(30, 340)">
+        <Zap size={22} className="text-teal opacity-25" strokeWidth={1.5} />
+      </g>
  
       {/* Area 5 (Bottom Right) */}
-      <foreignObject x="420" y="280" width="28" height="28" transform="rotate(-10)">
-        <Rocket className="w-full h-full text-orange opacity-50" strokeWidth={1.2} />
-      </foreignObject>
-      <foreignObject x="360" y="330" width="22" height="22">
-        <Monitor className="w-full h-full text-teal opacity-35" strokeWidth={1.5} />
-      </foreignObject>
-      <foreignObject x="450" y="350" width="20" height="20">
-        <Orbit className="w-full h-full text-orange opacity-25" strokeWidth={1.2} />
-      </foreignObject>
+      <g transform="translate(420, 280) rotate(-10)">
+        <Rocket size={28} className="text-orange opacity-50" strokeWidth={1.2} />
+      </g>
+      <g transform="translate(360, 330)">
+        <Monitor size={22} className="text-teal opacity-35" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(450, 350)">
+        <Orbit size={20} className="text-orange opacity-25" strokeWidth={1.2} />
+      </g>
  
       {/* Area 6 (Mid Sides) */}
-      <foreignObject x="460" y="180" width="18" height="18">
-        <Zap className="w-full h-full text-teal opacity-40" strokeWidth={1.5} />
-      </foreignObject>
-      <foreignObject x="15" y="210" width="20" height="20" transform="rotate(25)">
-        <Palette className="w-full h-full text-orange opacity-30" strokeWidth={1.5} />
-      </foreignObject>
-      <foreignObject x="130" y="240" width="24" height="24">
-        <Monitor className="w-full h-full text-teal opacity-20" strokeWidth={1.5} />
-      </foreignObject>
-      <foreignObject x="390" y="160" width="22" height="22">
-        <Orbit className="w-full h-full text-orange opacity-35" strokeWidth={1.2} />
-      </foreignObject>
+      <g transform="translate(460, 180)">
+        <Zap size={18} className="text-teal opacity-40" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(15, 210) rotate(25)">
+        <Palette size={20} className="text-orange opacity-30" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(130, 240)">
+        <Monitor size={24} className="text-teal opacity-20" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(390, 160)">
+        <Orbit size={22} className="text-orange opacity-35" strokeWidth={1.2} />
+      </g>
  
       {/* Existing Abstract Icons (Brain, Atom, etc.) distributed */}
-      <foreignObject x="250" y="80" width="18" height="18">
-        <Brain className="w-full h-full text-teal opacity-40" strokeWidth={1.5} />
-      </foreignObject>
-      <foreignObject x="140" y="100" width="22" height="22">
-        <Atom className="w-full h-full text-orange opacity-25" strokeWidth={1.5} />
-      </foreignObject>
-      <foreignObject x="320" y="240" width="20" height="20">
-        <Cpu className="w-full h-full text-teal opacity-30" strokeWidth={1} />
-      </foreignObject>
+      <g transform="translate(250, 80)">
+        <Brain size={18} className="text-teal opacity-40" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(140, 100)">
+        <Atom size={22} className="text-orange opacity-25" strokeWidth={1.5} />
+      </g>
+      <g transform="translate(320, 240)">
+        <Cpu size={20} className="text-teal opacity-30" strokeWidth={1} />
+      </g>
  
       {/* Grid Lines */}
       <path d="M0 200 H500 M250 0 V400" stroke="rgba(44,216,228,0.1)" strokeWidth="0.5" />
@@ -267,13 +292,11 @@ export default function App() {
       <Background />
       
       <motion.main 
-        initial={!isMobile ? { opacity: 0, y: 30, scale: 0.98 } : { opacity: 1 }}
-        animate={!isMobile ? { opacity: 1, y: 0, scale: 1 } : { opacity: 1 }}
+        initial={!isMobile ? { opacity: 0, y: 16 } : { opacity: 1 }}
+        animate={!isMobile ? { opacity: 1, y: 0 } : { opacity: 1 }}
         transition={!isMobile ? { 
-          type: "spring", 
-          stiffness: 120, 
-          damping: 14,
-          mass: 1.1
+          duration: 0.35,
+          ease: [0.2, 0.8, 0.2, 1]
         } : { duration: 0 }}
         className="page relative z-10 max-w-[980px] mx-auto p-[50px_18px_80px]"
       >
@@ -289,17 +312,24 @@ export default function App() {
             <div className="relative z-[3] p-[24px_26px_28px] flex flex-col items-center text-center lg:items-start lg:text-left">
               <div className="w-[140px] h-[140px] rounded-full p-[3px] bg-[linear-gradient(135deg,#2cd8e4,#FF6D4C,#D4140D)] mb-[20px] shrink-0 shadow-[0_0_0_6px_rgba(44,216,228,0.10),0_8px_28px_rgba(0,0,0,0.50)]">
                 <div className="w-full h-full rounded-full bg-[linear-gradient(145deg,#0d3530,#08201c)] flex items-center justify-center overflow-hidden font-display font-bold text-[20px] text-teal tracking-[0.5px]">
-                  <img 
-                    src={profileImg} 
-                    alt="Mohammadreza Aghamohammadi" 
-                    onError={(e) => { 
-                      const target = e.target as HTMLImageElement;
-                      if (!target.src.includes('images.unsplash.com')) {
-                        target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400";
-                      }
-                    }} 
-                    className="w-full h-full object-cover" 
-                  />
+                  <picture className="w-full h-full">
+                    <source srcSet={profileWebp} type="image/webp" />
+                    <img 
+                      src={profileImg} 
+                      alt="Mohammadreza Aghamohammadi" 
+                      width={140}
+                      height={140}
+                      decoding="async"
+                      fetchPriority="high"
+                      onError={(e) => { 
+                        const target = e.target as HTMLImageElement;
+                        if (!target.src.includes('images.unsplash.com')) {
+                          target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400";
+                        }
+                      }} 
+                      className="w-full h-full object-cover" 
+                    />
+                  </picture>
                 </div>
               </div>
               <h1 className="font-display font-medium text-[clamp(24px,3vw,36px)] leading-[1.1] text-t1 mb-[12px]">
@@ -327,7 +357,7 @@ export default function App() {
           <a href="https://instagram.com/Future.xperience" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-4">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <Instagram className="w-6 h-6 text-[#E4405F] transition-all duration-300 transform group-hover:rotate-12 group-hover:scale-110" />
+               <Instagram className="w-6 h-6 text-[#E4405F] transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:rotate-12 group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Instagram</div>
@@ -354,7 +384,7 @@ export default function App() {
           <a href="https://linkedin.com/in/mxreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 sm:col-span-2 lg:col-span-2 relative lg:order-5">
             <Arrow absolute />
             <div className="w-[48px] h-[48px] rounded-[13px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0">
-               <Linkedin className="w-8 h-8 text-[#0A66C2] transition-all duration-300 transform group-hover:scale-105" />
+               <Linkedin className="w-8 h-8 text-[#0A66C2] transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:scale-105" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
               <div className="font-display font-bold text-[16px] text-t1 mb-[1px] lg:mb-[3px]">LinkedIn</div>
@@ -382,7 +412,7 @@ export default function App() {
           <a href="https://open.spotify.com/user/8tzab99p5plcegezsx2wrz6vg" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-6">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <SpotifyIcon className="w-6 h-6 text-[#1DB954] transition-all duration-300 transform group-hover:scale-110" />
+               <SpotifyIcon className="w-6 h-6 text-[#1DB954] transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Spotify</div>
@@ -409,7 +439,7 @@ export default function App() {
           <a href="https://x.com/mxrezax" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-7">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <XIcon className="w-4 h-4 text-white transition-all duration-300 transform group-hover:scale-110" />
+               <XIcon className="w-4 h-4 text-white transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">X</div>
@@ -436,7 +466,7 @@ export default function App() {
           <a href="https://www.coffeebede.com/mreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[12px_22px] lg:p-[15px_22px] flex flex-row items-center gap-[14px] h-full sm:col-span-2 lg:col-span-2 lg:row-span-1 rounded-[32px] min-h-[90px] sm:min-h-[95px] lg:min-h-0 relative overflow-hidden lg:order-11">
             <Arrow absolute centered />
             <div className="w-[40px] h-[40px] lg:w-[44px] lg:h-[44px] rounded-[11px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0">
-               <Coffee className="w-6 h-6 text-[#f5c842] transition-all duration-300 transform group-hover:rotate-12 group-hover:scale-110" />
+               <Coffee className="w-6 h-6 text-[#f5c842] transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:rotate-12 group-hover:scale-110" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="font-display font-bold text-[15px] text-t1 mb-[0px]">CoffeeBede</div>
@@ -459,7 +489,7 @@ export default function App() {
           <a href="https://link.chess.com/play/WmoVTI" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[12px_22px] lg:p-[15px_22px] flex flex-row items-center gap-[14px] h-full sm:col-span-2 lg:col-span-2 lg:row-span-1 rounded-[32px] min-h-[90px] sm:min-h-[95px] lg:min-h-0 relative overflow-hidden lg:order-10">
             <Arrow absolute centered />
             <div className="w-[40px] h-[40px] lg:w-[44px] lg:h-[44px] rounded-[11px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0">
-               <Trophy className="w-7 h-7 text-[#81B64C] transition-all duration-300 transform group-hover:scale-110" />
+               <Trophy className="w-7 h-7 text-[#81B64C] transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:scale-110" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="font-display font-bold text-[15px] text-t1 mb-[0px]">Chess.com</div>
@@ -482,7 +512,7 @@ export default function App() {
           <a href="https://dribbble.com/mxreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-3">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <Dribbble className="w-6 h-6 text-[#EA4C89] transition-all duration-300 transform group-hover:scale-110" />
+               <Dribbble className="w-6 h-6 text-[#EA4C89] transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Dribbble</div>
@@ -509,7 +539,7 @@ export default function App() {
           <a href="https://medium.com/@mxreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 lg:col-span-1 lg:row-span-2 relative overflow-hidden lg:order-8">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <MediumIcon className="w-6 h-6 text-white transition-all duration-300 transform group-hover:scale-110" />
+               <MediumIcon className="w-6 h-6 text-white transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Medium</div>
@@ -536,7 +566,7 @@ export default function App() {
           <a href="https://virgool.io/@mxreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 lg:col-span-1 lg:row-span-2 relative overflow-hidden lg:order-9">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <VirgoolIcon className="w-6 h-6 text-[#177bdc] transition-all duration-300 transform group-hover:scale-110" />
+               <VirgoolIcon className="w-6 h-6 text-[#177bdc] transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Virgool</div>
