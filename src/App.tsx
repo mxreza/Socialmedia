@@ -110,6 +110,12 @@ const SpotifyIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const StravaIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7.008 13.828h4.172z"/>
+  </svg>
+);
+
 const MediumIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.41-3.38 6.41s-3.38-2.87-3.38-6.41 1.51-6.41 3.38-6.41 3.38 2.87 3.38 6.41zM24 12c0 3.17-.53 5.75-1.19 5.75s-1.19-2.58-1.19-5.75.53-5.75 1.19-5.75S24 8.83 24 12z"/>
@@ -273,15 +279,15 @@ const ProfilePattern = React.memo(() => (
 
 export default function App() {
   const [stats, setStats] = useState({
-    instagram: { followers: "4.2k", posts: "118" },
+    instagram: { followers: "485", posts: "118" },
     linkedin: { connects: "2.8k", posts: "47" },
     spotify: { playlists: "18", minutes: "45k" },
-    x: { followers: "3.2k", posts: "680" },
+    x: { followers: "360", posts: "680" },
     coffeebede: { fans: "12", coffees: "42" },
     chess: { rating: "1.4k", wins: "860" },
-    dribbble: { followers: "1.4k", shots: "62" },
-    medium: { followers: "1.2k", stories: "14" },
-    virgool: { followers: "3.4k", posts: "82" }
+    dribbble: { followers: "320", shots: "62" },
+    strava: { activities: "14", distance: "54 km" },
+    virgool: { followers: "85", posts: "82" }
   });
 
 
@@ -354,14 +360,14 @@ export default function App() {
           </motion.div>
 
           {/* Instagram Card (Now 3rd in DOM for mobile, Order 4 for desktop) */}
-          <a href="https://instagram.com/Future.xperience" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-4">
+          <a href="https://instagram.com/mxreza_" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 relative overflow-hidden lg:order-4">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
                <Instagram className="w-6 h-6 text-[#E4405F] transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:rotate-12 group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
               <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Instagram</div>
-              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@Future.xperience</div>
+              <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxreza_</div>
               <div className="hidden lg:flex gap-[6px]">
                 <Chip value={stats.instagram.followers} label="Followers" />
                 <Chip value={stats.instagram.posts} label="Posts" />
@@ -535,29 +541,29 @@ export default function App() {
             </div>
           </a>
 
-          {/* Medium Card */}
-          <a href="https://medium.com/@mxreza" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 lg:col-span-1 lg:row-span-2 relative overflow-hidden lg:order-8">
+          {/* Strava Card */}
+          <a href="https://strava.app.link/FcNvsLKqy6b" target="_blank" rel="noopener noreferrer" className="card-glass card-glass-hover group p-[20px_22px] flex flex-row lg:flex-col items-center lg:items-stretch gap-[14px] lg:gap-0 h-full rounded-[32px] min-h-[110px] sm:min-h-[125px] lg:min-h-0 lg:col-span-1 lg:row-span-2 relative overflow-hidden lg:order-8">
             <Arrow absolute />
             <div className="w-10 h-10 rounded-[12px] bg-white/4 border border-white/7 flex items-center justify-center shrink-0 lg:mb-0">
-               <MediumIcon className="w-6 h-6 text-white transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:scale-110" />
+               <StravaIcon className="w-6 h-6 text-[#FC4C02] transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] transform group-hover:scale-110" />
             </div>
             <div className="flex-1 lg:mt-auto lg:pt-3 min-w-0">
-              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Medium</div>
+              <div className="font-display font-bold text-[14.5px] text-t1 mb-[1px] lg:mb-[3px]">Strava</div>
               <div className="text-[10px] text-t3 tracking-[0.1px] mb-0 lg:mb-[14px]">@mxreza</div>
               <div className="hidden lg:flex gap-[6px]">
-                <Chip value={stats.medium.followers} label="Followers" />
-                <Chip value={stats.medium.stories} label="Stories" />
+                <Chip value={stats.strava.activities} label="Activities" />
+                <Chip value={stats.strava.distance} label="Distance" />
               </div>
             </div>
             <div className="lg:hidden flex items-center gap-[11px] shrink-0 pr-10">
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.medium.followers}</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Followers</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.strava.activities}</span>
+                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold">Activities</span>
               </div>
               <div className="w-[1px] h-[26px] bg-orange/18 shrink-0" />
               <div className="flex flex-col items-end gap-[1px]">
-                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.medium.stories}</span>
-                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Stories</span>
+                <span className="font-display font-bold text-[15px] text-t1 leading-none">{stats.strava.distance}</span>
+                <span className="text-[8px] text-t3 uppercase tracking-[0.5px] font-semibold text-right">Distance</span>
               </div>
             </div>
           </a>
