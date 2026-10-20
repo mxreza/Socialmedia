@@ -62,7 +62,7 @@ body {
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
-@media (min-width: 769px) {
+@media (min-width: 769px) and (pointer: fine) {
   * {
     cursor: none !important;
   }
@@ -74,6 +74,24 @@ html {
   -webkit-overflow-scrolling: touch;
 }
 
+/* Desktop Entrance Animation */
+@media (min-width: 769px) {
+  .page-enter {
+    animation: pageEnter 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 /* Glass Card Utility */
 .card-glass {
   @apply relative overflow-hidden bg-glass backdrop-blur-[30px] border border-glass-b;
@@ -82,7 +100,6 @@ html {
               box-shadow 0.42s cubic-bezier(0.16, 1, 0.3, 1),
               background-color 0.42s cubic-bezier(0.16, 1, 0.3, 1);
   transform: translateZ(0);
-  will-change: transform, border-color, box-shadow;
   backface-visibility: hidden;
   box-shadow: 
     inset 0 1.5px 0 rgba(44, 216, 228, 0.10),
@@ -108,10 +125,11 @@ html {
 
 .card-glass-hover {
   cursor: pointer;
+  will-change: transform;
 }
 
 .card-glass-hover:hover {
-  transform: translateY(-5px) translateZ(0);
+  transform: translate3d(0, -5px, 0);
   border-color: rgba(255, 109, 76, 0.38);
   box-shadow:
     inset 0 1.5px 0 rgba(255, 109, 76, 0.22),
@@ -126,22 +144,16 @@ html {
 
 /* Mobile Performance Optimizations */
 @media (max-width: 768px) {
-  .animate-blob, 
-  .animate-blob-slow, 
-  .animate-blob-reverse {
-    animation: none !important; /* Fully stop animations to save CPU */
-  }
-  
   .animate-pulse {
     animation: none !important;
   }
 
   .noise {
-    opacity: 0.015; /* Even lighter noise for mobile performance */
+    opacity: 0.015;
   }
 
   .dot-grid {
-    opacity: 0.12; /* Slightly dimmer for better contrast/speed */
+    opacity: 0.12;
   }
 }
 
@@ -150,10 +162,17 @@ html {
   50% { transform: scale(1.4); opacity: 0.5; }
 }
 
+/* Static Composited Background Layer */
+.bg-stage {
+  contain: paint;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 /* Noise & Grid textures */
 .noise {
   @apply fixed inset-0 opacity-[0.025] pointer-events-none z-[1];
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px;
   transform: translateZ(0);
   contain: strict;
